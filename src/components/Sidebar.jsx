@@ -60,42 +60,38 @@ export default function Sidebar() {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-logo flex items-center gap-3 p-4 mb-4 border-b border-[var(--border)]">
-        <img src="/logo-fr.png" alt="Logo" className="h-8 object-contain" />
-        <div className="flex flex-col">
-          <span className="font-bold text-[var(--primary-dark)]">GesAbsences</span>
-          <small className="text-[0.7rem] text-muted">{ROLE_LABELS[user?.role] || ''}</small>
+      <div className="sidebar-logo">
+        <img src="/logo-fr.png" alt="Logo" style={{ height: 36, width: 36, objectFit: 'contain', flexShrink: 0 }} />
+        <div>
+          <span>GesAbsences</span>
+          <small>{ROLE_LABELS[user?.role] || ''}</small>
         </div>
       </div>
 
-      <nav className="sidebar-nav px-3 space-y-1">
+
+      <nav className="sidebar-nav">
         {items.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to.split('/').length <= 2}
-            className={({ isActive }) => 
-              `nav-item flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors ${isActive ? 'active bg-[var(--primary-bg)] text-[var(--primary-dark)] font-medium' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}`
-            }
+            className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
           >
-            <span className="nav-icon flex items-center justify-center text-current">{item.icon}</span>
+            <span className="nav-icon">{item.icon}</span>
             {item.label}
           </NavLink>
         ))}
       </nav>
 
-      <div className="p-4 mt-auto border-t border-[var(--border)]">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="avatar w-10 h-10 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold">{initials}</div>
-          <div className="overflow-hidden">
-            <div className="text-sm font-semibold text-gray-900 truncate">{user?.name}</div>
-            <div className="text-xs text-muted truncate">{user?.email}</div>
+      <div style={{ padding:'16px', marginTop:'auto', borderTop:'1px solid var(--border)' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
+          <div className="avatar">{initials}</div>
+          <div style={{ overflow:'hidden', flex:1 }}>
+            <div style={{ fontSize:14, fontWeight:600, color:'var(--text-primary)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{user?.name}</div>
+            <div style={{ fontSize:12, color:'var(--text-secondary)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{user?.email}</div>
           </div>
         </div>
-        <button 
-          className="btn btn-secondary w-full flex items-center justify-center gap-2 py-2 text-sm transition-colors hover:bg-red-50 hover:text-red-600 hover:border-red-200" 
-          onClick={handleLogout}
-        >
+        <button className="btn btn-secondary w-full" style={{ width:'100%', justifyContent:'center' }} onClick={handleLogout}>
           <LogOut size={16} /> Déconnexion
         </button>
       </div>
