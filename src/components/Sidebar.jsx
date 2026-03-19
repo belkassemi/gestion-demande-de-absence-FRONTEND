@@ -60,11 +60,11 @@ export default function Sidebar() {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-logo">
-        <img src="/logo-fr.png" alt="Logo" style={{ height: 36, width: 36, objectFit: 'contain', flexShrink: 0 }} />
-        <div>
-          <span>GesAbsences</span>
-          <small>{ROLE_LABELS[user?.role] || ''}</small>
+      <div className="sidebar-logo" style={{ flexDirection:'column', alignItems:'center', gap:8, padding:'20px 16px', textAlign:'center' }}>
+        <img src="/logo-fr.png" alt="Logo" style={{ height: 110, width: 'auto', maxWidth: 200, objectFit: 'contain' }} />
+        <div style={{ textAlign:'center' }}>
+          <span style={{ fontSize:'0.95rem' }}>GesAbsences</span>
+          <small style={{ display:'block' }}>{ROLE_LABELS[user?.role] || ''}</small>
         </div>
       </div>
 
