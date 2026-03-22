@@ -4,6 +4,12 @@ import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '../features/api/absenceApi';
 import { setCredentials } from '../features/auth/authSlice';
 import { Mail, Lock, LogIn } from 'lucide-react';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+  email: z.string().email("Veuillez entrer une adresse email valide"),
+  password: z.string().min(4, "Le mot de passe doit contenir au moins 4 caractères")
+});
 
 export default function LoginPage() {
   const [email, setEmail]    = useState('');
@@ -17,6 +23,14 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Zod validation
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      setError(result.error.errors[0].message);
+      return;
+    }
+
     try {
       const data = await login({ email, password }).unwrap();
       dispatch(setCredentials({ user: data.user, token: data.token }));

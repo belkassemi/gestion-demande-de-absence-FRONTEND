@@ -1,47 +1,86 @@
 import React from 'react';
 import { useGetDirecteurDashboardQuery } from '../../features/api/absenceApi';
+import { Clock, CheckCircle, XCircle, TrendingUp } from 'lucide-react';
 
 export default function DirecteurOverview() {
-  const { data: stats, isLoading } = useGetDirecteurDashboardQuery();
+  const { data: stats, isLoading, isError } = useGetDirecteurDashboardQuery();
 
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
-  if (!stats) return <div className="alert alert-error">Erreur de chargement.</div>;
+  if (isError || !stats) return <div className="alert alert-error">Erreur de chargement du tableau de bord.</div>;
 
   return (
     <div>
-      <h2 className="font-bold mb-6">Tableau de bord de la Direction</h2>
+      <h2 className="font-bold mb-6" style={{ fontSize: '1.25rem' }}>Tableau de bord de la Direction</h2>
 
+      {/* KPI Cards */}
       <div className="grid-4 mb-6">
-        <div className="stat-card primary">
-          <div className="stat-label">Demandes Traitées (Mois)</div>
-          <div className="stat-value">{stats.monthly_processed}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">À Valider (Niveau 3)</div>
-          <div className="stat-value text-warning" style={{ color: 'var(--warning)' }}>{stats.pending_level_3}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Taux d'Approbation</div>
-          <div className="stat-value text-success" style={{ color: 'var(--success)' }}>
-             {stats.monthly_processed > 0 
-                ? Math.round((stats.monthly_approved / stats.monthly_processed) * 100) 
-                : 0}%
+        <div className="stat-card" style={{ borderLeft: '4px solid var(--warning)' }}>
+          <div className="flex items-center gap-3 mb-2">
+            <Clock size={28} className="opacity-80" style={{ color: 'var(--warning)' }} />
+            <div className="stat-label flex-1">En attente (Niveau 2)</div>
+          </div>
+          <div className="stat-value" style={{ color: 'var(--warning)' }}>
+            {stats.pending_for_directeur}
           </div>
         </div>
-        <div className="stat-card">
-          <div className="stat-label">Absences auj.</div>
-          <div className="stat-value">{stats.absent_today} employés</div>
+
+        <div className="stat-card" style={{ borderLeft: '4px solid var(--success)' }}>
+          <div className="flex items-center gap-3 mb-2">
+            <CheckCircle size={28} style={{ color: 'var(--success)' }} />
+            <div className="stat-label flex-1">Approuvées (ce mois)</div>
+          </div>
+          <div className="stat-value" style={{ color: 'var(--success)' }}>
+            {stats.approved_this_month}
+          </div>
+        </div>
+
+        <div className="stat-card" style={{ borderLeft: '4px solid var(--error)' }}>
+          <div className="flex items-center gap-3 mb-2">
+            <XCircle size={28} style={{ color: 'var(--error)' }} />
+            <div className="stat-label flex-1">Rejetées (ce mois)</div>
+          </div>
+          <div className="stat-value" style={{ color: 'var(--error)' }}>
+            {stats.rejected_this_month}
+          </div>
+        </div>
+
+        <div className="stat-card primary">
+          <div className="flex items-center gap-3 mb-2">
+            <TrendingUp size={28} className="opacity-80" />
+            <div className="stat-label flex-1 text-white opacity-90">Taux d'approbation</div>
+          </div>
+          <div className="stat-value">{stats.approval_rate}%</div>
         </div>
       </div>
 
-      <div className="card text-sm">
-        <div className="flex justify-between items-center mb-4 border-b pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
-          <h3 className="font-semibold text-sm">Absents d'aujourd'hui</h3>
-        </div>
-        {stats.absent_today > 0 ? (
-          <p className="text-muted">Des employés sont actuellement en absence (données détaillées dans /stats).</p>
+      {/* Monthly Trend Table */}
+      <div className="card">
+        <h3 className="font-semibold mb-4 text-sm">Tendance mensuelle (6 derniers mois)</h3>
+        {stats.trend && stats.trend.length > 0 ? (
+          <div className="table-wrapper">
+            <table className="w-full text-sm">
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th style={{ color: 'var(--success)' }}>Approuvées</th>
+                  <th style={{ color: 'var(--error)' }}>Rejetées</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.trend.map((row, idx) => (
+                  <tr key={idx}>
+                    <td className="font-semibold">{row.month}</td>
+                    <td style={{ color: 'var(--success)' }}>{row.approved}</td>
+                    <td style={{ color: 'var(--error)' }}>{row.rejected}</td>
+                    <td className="text-muted">{row.approved + row.rejected}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
-          <p className="text-muted">Aucune absence approuvée pour aujourd'hui sur l'ensemble du personnel.</p>
+          <p className="text-muted text-sm">Aucune donnée disponible pour les 6 derniers mois.</p>
         )}
       </div>
     </div>

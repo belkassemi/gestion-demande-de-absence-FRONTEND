@@ -4,25 +4,23 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from './features/auth/authSlice';
 
 // Pages
-import LoginPage           from './pages/LoginPage';
-import EmployeeDashboard   from './pages/employee/EmployeeDashboard';
-import ChefDashboard       from './pages/chef/ChefDashboard';
-import RhDashboard         from './pages/rh/RhDashboard';
-import DirecteurDashboard  from './pages/directeur/DirecteurDashboard';
-import AdminDashboard      from './pages/admin/AdminDashboard';
-import Home                from './pages/Home';
-import AboutPage           from './pages/AboutPage';
-import ContactPage         from './pages/ContactPage';
+import LoginPage          from './pages/LoginPage';
+import EmployeeDashboard  from './pages/employee/EmployeeDashboard';
+import ChefDashboard      from './pages/chef/ChefDashboard';
+import DirecteurDashboard from './pages/directeur/DirecteurDashboard';
+import AdminDashboard     from './pages/admin/AdminDashboard';
+import Home               from './pages/Home';
+import AboutPage          from './pages/AboutPage';
+import ContactPage        from './pages/ContactPage';
 
 // Guards
 import ProtectedRoute from './components/ProtectedRoute';
 
 const ROLE_HOME = {
-  employee:  '/employee',
-  chef:      '/chef',
-  rh:        '/rh',
-  directeur: '/directeur',
-  admin:     '/admin',
+  employee:    '/employee/requests',
+  chef_service: '/chef-service',
+  directeur:   '/directeur',
+  admin:       '/admin',
 };
 
 function PublicLanding() {
@@ -35,27 +33,21 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"        element={<PublicLanding />} />
-        <Route path="/login"   element={<PublicLanding />} />
+        <Route path="/"         element={<PublicLanding />} />
+        <Route path="/login"    element={<PublicLanding />} />
         <Route path="/old-login" element={<LoginPage />} />
-        <Route path="/about"   element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about"    element={<AboutPage />} />
+        <Route path="/contact"  element={<ContactPage />} />
 
         <Route path="/employee/*" element={
-          <ProtectedRoute allowedRoles={['employee']}>
+          <ProtectedRoute allowedRoles={['employee', 'chef_service', 'directeur']}>
             <EmployeeDashboard />
           </ProtectedRoute>
         } />
 
-        <Route path="/chef/*" element={
-          <ProtectedRoute allowedRoles={['chef']}>
+        <Route path="/chef-service/*" element={
+          <ProtectedRoute allowedRoles={['chef_service']}>
             <ChefDashboard />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/rh/*" element={
-          <ProtectedRoute allowedRoles={['rh']}>
-            <RhDashboard />
           </ProtectedRoute>
         } />
 

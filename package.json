@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.20",
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/react": "^6.1.20",
     "@reduxjs/toolkit": "^2.11.2",
     "axios": "^1.13.6",
     "lucide-react": "^0.577.0",
@@ -18,7 +22,8 @@
     "react-is": "^19.2.4",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.1",
-    "recharts": "^3.8.0"
+    "recharts": "^3.8.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

@@ -7,7 +7,7 @@ import ChefHistory from './ChefHistory';
 
 export default function ChefDashboard() {
   return (
-    <AppLayout title="Espace Chef de Division">
+    <AppLayout title="Espace Chef de Service">
       <Routes>
         <Route path="/" element={<ChefPending />} />
         <Route path="calendar" element={<ChefCalendar />} />

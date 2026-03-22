@@ -1,6 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetAbsenceTypesQuery, useCreateRequestMutation } from '../../features/api/absenceApi';
+import { z } from 'zod';
+
+const requestSchema = z.object({
+  absence_type_id: z.string().min(1, "Veuillez sélectionner un type d'absence"),
+  start_date: z.string().refine(val => !isNaN(Date.parse(val)), "Date de début invalide"),
+  end_date: z.string().refine(val => !isNaN(Date.parse(val)), "Date de fin invalide"),
+  reason: z.string().optional()
+}).refine(data => new Date(data.end_date) >= new Date(data.start_date), {
+  message: "La date de fin doit être postérieure ou égale à la date de début",
+  path: ["end_date"]
+});
 
 export default function EmployeeRequestForm() {
   const { data: types, isLoading: loadingTypes } = useGetAbsenceTypesQuery();
@@ -36,6 +47,13 @@ export default function EmployeeRequestForm() {
     e.preventDefault();
     setErrorMsg('');
     
+    // Zod Validation
+    const result = requestSchema.safeParse(form);
+    if (!result.success) {
+      setErrorMsg(result.error.errors[0].message);
+      return;
+    }
+
     if (selectedType?.requires_document && !document) {
       setErrorMsg("Un justificatif est obligatoire pour ce type d'absence.");
       return;
@@ -47,18 +65,7 @@ export default function EmployeeRequestForm() {
       formData.append('start_date', form.start_date);
       formData.append('end_date', form.end_date);
       if (form.reason) formData.append('reason', form.reason);
-      
-      // The backend expects 'user_id' in store method. It's better if backend infers it from Auth::id(), 
-      // but since our controller requires it, we must provide it. In a real app backend would use Auth::id().
-      // For now we get the user from localStorage or auth slice. 
-      // Actually, since RTK query manages auth, let's grab the user object.
-      const userStr = localStorage.getItem('absence_user');
-      if (userStr) {
-        const user = JSON.parse(userStr);
-        formData.append('user_id', user.id);
-      } else {
-        throw new Error("Utilisateur non connecté");
-      }
+      // user_id is now inferred server-side from Auth::id()
 
       if (document) {
         formData.append('document', document);

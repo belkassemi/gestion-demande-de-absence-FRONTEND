@@ -10,7 +10,7 @@ import {
     CheckCircle
 } from 'lucide-react';
 import logoDark from '/logo-fr.png';
-import buildingImage from '../assets/1-PERSPECTIVE EXTERIERURE 1.jpg';
+import buildingImage from '../assets/building-perspective.jpg';
 
 export default function ContactPage() {
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function ContactPage() {
             <div style={{ position: 'relative', height: '40vh', backgroundColor: '#0f172a', overflow: 'hidden' }}>
                 <div style={{
                     position: 'absolute', inset: 0, opacity: 0.4,
-                    backgroundImage: `url('${buildingImage.replace(/\\/g, "/")}')`,
+                    backgroundImage: `url('${buildingImage}')`,
                     backgroundSize: 'cover', backgroundPosition: 'center'
                 }}></div>
                 <div style={{
@@ -204,7 +204,7 @@ export default function ContactPage() {
                             <div style={{ position: 'relative', height: '340px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
                                 <div style={{
                                     position: 'absolute', inset: 0, opacity: 0.3,
-                                    backgroundImage: `url('${buildingImage.replace(/\\/g, "/")}')`,
+                                    backgroundImage: `url('${buildingImage}')`,
                                     backgroundSize: 'cover', backgroundPosition: 'center'
                                 }}></div>
                                 <div style={{

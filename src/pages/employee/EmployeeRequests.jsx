@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useGetMyRequestsQuery, useCancelRequestMutation } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
+import { STORAGE_URL } from '../../features/api/apiSlice';
+import { FileText } from 'lucide-react';
 
 export default function EmployeeRequests() {
   const [page, setPage] = useState(1);
@@ -98,17 +100,43 @@ export default function EmployeeRequests() {
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
             
-            <div className="grid-2 mb-6 text-sm">
-              <div><strong className="text-muted block text-xs uppercase">Type</strong> {selectedReq.absence_type?.name}</div>
-              <div><strong className="text-muted block text-xs uppercase">Durée</strong> {selectedReq.days_count} jours</div>
-              <div><strong className="text-muted block text-xs uppercase">Du</strong> {selectedReq.start_date}</div>
-              <div><strong className="text-muted block text-xs uppercase">Au</strong> {selectedReq.end_date}</div>
-              <div style={{ gridColumn: 'span 2' }}>
-                <strong className="text-muted block text-xs uppercase">Motif</strong>
-                <p className="mt-1 p-3 bg-gray-50 rounded" style={{ background: 'var(--bg)', borderRadius: '4px' }}>
-                  {selectedReq.reason || <span className="text-muted italic">Aucun motif</span>}
-                </p>
+            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Type d'absence</span>
+                <span className="font-semibold text-base">{selectedReq.absence_type?.name}</span>
               </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Durée totale</span>
+                <span className="font-semibold text-base">{selectedReq.days_count} jours</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de début</span>
+                <span className="font-medium text-sm">{selectedReq.start_date}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de fin</span>
+                <span className="font-medium text-sm">{selectedReq.end_date}</span>
+              </div>
+              
+              {(selectedReq.document_path || selectedReq.reason) && (
+                <div className="col-span-2 border-t pt-4 mt-2 border-border/50 flex flex-col gap-4">
+                  {selectedReq.document_path && (
+                    <div>
+                      <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-2">Document Justificatif</span>
+                      <a href={`${STORAGE_URL}/${selectedReq.document_path}`} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm inline-flex items-center gap-2 hover:bg-white transition-colors">
+                        <FileText size={16} /> Voir le document
+                      </a>
+                    </div>
+                  )}
+
+                  <div>
+                    <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif</span>
+                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
+                      {selectedReq.reason || "Aucun motif fourni"}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             <h3 className="font-semibold text-sm border-b pb-2 mb-4" style={{ borderBottom: '1px solid var(--border)' }}>

@@ -5,7 +5,7 @@ import { ArrowRight, Mail, Lock, Eye, EyeOff, AlertCircle, X } from 'lucide-reac
 import { useLoginMutation } from '../features/api/absenceApi';
 import { setCredentials } from '../features/auth/authSlice';
 
-import bgImage from '../assets/1-PERSPECTIVE EXTERIERURE 1.jpg';
+import bgImage from '../assets/building-perspective.jpg';
 import logo from '/logo-fr.png';
 
 export default function Home() {
@@ -52,7 +52,7 @@ export default function Home() {
         flexDirection: 'column',
         overflow: 'hidden',
         fontFamily: 'Poppins, Inter, sans-serif',
-        backgroundImage: `url('${bgImage.replace(/\\/g, "/")}')`,
+        backgroundImage: `url('${bgImage}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

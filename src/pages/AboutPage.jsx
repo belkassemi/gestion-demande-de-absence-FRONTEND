@@ -15,7 +15,7 @@ import {
     ChevronRight
 } from 'lucide-react';
 import logoDark from '/logo-fr.png';
-import buildingImage from '../assets/1-PERSPECTIVE EXTERIERURE 1.jpg';
+import buildingImage from '../assets/building-perspective.jpg';
 
 export default function AboutPage() {
     const navigate = useNavigate();
@@ -67,7 +67,7 @@ export default function AboutPage() {
             <div style={{ position: 'relative', height: '50vh', backgroundColor: '#0f172a', overflow: 'hidden' }}>
                 <div style={{
                     position: 'absolute', inset: 0, opacity: 0.4,
-                    backgroundImage: `url('${buildingImage.replace(/\\/g, "/")}')`,
+                    backgroundImage: `url('${buildingImage}')`,
                     backgroundSize: 'cover', backgroundPosition: 'center'
                 }}></div>
                 <div style={{

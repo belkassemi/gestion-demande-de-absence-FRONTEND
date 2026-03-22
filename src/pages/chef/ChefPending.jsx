@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useGetChefPendingRequestsQuery, useReviewChefRequestMutation } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
+import { STORAGE_URL } from '../../features/api/apiSlice';
+import { FileText } from 'lucide-react';
+
 import ApprovalTimeline from '../../components/ApprovalTimeline';
 
 export default function ChefPending() {
@@ -12,7 +15,7 @@ export default function ChefPending() {
 
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = data?.data || []; // Assuming paginated response from backend
+  const requests = Array.isArray(data) ? data : (data?.data || []); // Handle flat arrays correctly
 
   const handleReview = async (action) => {
     try {
@@ -70,14 +73,43 @@ export default function ChefPending() {
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
             
-            <div className="grid-2 mb-4 text-sm bg-gray-50 p-4 rounded" style={{ background: 'var(--primary-bg)', borderRadius: 'var(--radius)' }}>
-              <div><strong className="text-muted block text-xs uppercase">Type</strong> {selectedReq.absence_type?.name}</div>
-              <div><strong className="text-muted block text-xs uppercase">Durée</strong> {selectedReq.days_count} jours</div>
-              <div><strong className="text-muted block text-xs uppercase">Période</strong> {selectedReq.start_date} <span className="text-muted">au</span> {selectedReq.end_date}</div>
-              <div style={{ gridColumn: 'span 2', marginTop: '.5rem' }}>
-                <strong className="text-muted block text-xs uppercase">Motif de l'employé</strong>
-                <p className="mt-1">{selectedReq.reason || <span className="text-muted italic">Aucun motif fourni</span>}</p>
+            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Type d'absence</span>
+                <span className="font-semibold text-base">{selectedReq.absence_type?.name}</span>
               </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Durée totale</span>
+                <span className="font-semibold text-base">{selectedReq.days_count} jours</span>
+              </div>
+              <div className="flex flex-col gap-1 col-span-2">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Période du congé</span>
+                <span className="font-medium text-sm">
+                  {new Date(selectedReq.start_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  <span className="mx-2 text-muted">au</span>
+                  {new Date(selectedReq.end_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </span>
+              </div>
+              
+              {(selectedReq.document_path || selectedReq.reason) && (
+                <div className="col-span-2 border-t pt-4 mt-2 border-border/50 flex flex-col gap-4">
+                  {selectedReq.document_path && (
+                    <div>
+                      <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-2">Document Justificatif</span>
+                      <a href={`${STORAGE_URL}/${selectedReq.document_path}`} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm inline-flex items-center gap-2 hover:bg-white transition-colors">
+                        <FileText size={16} /> Voir le document
+                      </a>
+                    </div>
+                  )}
+
+                  <div>
+                    <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif de l'employé</span>
+                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
+                      {selectedReq.reason || "Aucun motif fourni"}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="form-group mb-6">

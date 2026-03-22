@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useGetDirecteurPendingRequestsQuery, useReviewDirecteurRequestMutation } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, FileText } from 'lucide-react';
+import { STORAGE_URL } from '../../features/api/apiSlice';
 
 export default function DirecteurPending() {
   const { data, isLoading } = useGetDirecteurPendingRequestsQuery();
@@ -81,11 +82,45 @@ export default function DirecteurPending() {
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
             
-            <div className="grid-2 mb-4 text-sm bg-gray-50 p-4 rounded" style={{ background: 'var(--primary-bg)', borderRadius: 'var(--radius)' }}>
-              <div><strong className="text-muted block text-xs uppercase">Employé</strong> {selectedReq.user?.name}</div>
-              <div><strong className="text-muted block text-xs uppercase">Type</strong> {selectedReq.absence_type?.name}</div>
-              <div><strong className="text-muted block text-xs uppercase">Durée</strong> {selectedReq.days_count} jours</div>
-              <div><strong className="text-muted block text-xs uppercase">Période</strong> {selectedReq.start_date} au {selectedReq.end_date}</div>
+            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Employé</span>
+                <span className="font-semibold text-base">{selectedReq.user?.name}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Type d'absence</span>
+                <span className="font-semibold text-base">{selectedReq.absence_type?.name}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Durée totale</span>
+                <span className="font-semibold text-base">{selectedReq.days_count} jours</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Période du congé</span>
+                <span className="font-medium text-sm">
+                  {selectedReq.start_date} <span className="text-muted mx-1">au</span> {selectedReq.end_date}
+                </span>
+              </div>
+              
+              {(selectedReq.document_path || selectedReq.reason) && (
+                <div className="col-span-2 border-t pt-4 mt-2 border-border/50 flex flex-col gap-4">
+                  {selectedReq.document_path && (
+                    <div>
+                      <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-2">Document Justificatif</span>
+                      <a href={`${STORAGE_URL}/${selectedReq.document_path}`} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm inline-flex items-center gap-2 hover:bg-white transition-colors">
+                        <FileText size={16} /> Voir le document
+                      </a>
+                    </div>
+                  )}
+
+                  <div>
+                    <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif de l'employé</span>
+                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
+                      {selectedReq.reason || "Aucun motif fourni"}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             <h3 className="font-semibold text-sm border-b pb-2 mb-4" style={{ borderBottom: '1px solid var(--border)' }}>Historique des avis (Chef & RH)</h3>

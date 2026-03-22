@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle, XCircle, Clock } from 'lucide-react';
 
-const LEVEL_LABELS = ['Chef', 'RH', 'Directeur'];
+const LEVEL_LABELS = ['Chef de Service', 'Directeur'];
 
 export default function ApprovalTimeline({ approvals = [] }) {
   const ordered = [...approvals].sort((a, b) => a.level - b.level);
@@ -31,7 +31,7 @@ export default function ApprovalTimeline({ approvals = [] }) {
               >
                 {icons[status]}
               </div>
-              {level < 3 && <div className={`timeline-connector w-0.5 h-10 ${status === 'approved' ? 'bg-green-500' : 'bg-gray-300'}`} />}
+              {level < 2 && <div className={`timeline-connector w-0.5 h-10 ${status === 'approved' ? 'bg-green-500' : 'bg-gray-300'}`} />}
             </div>
             <div className="timeline-content pb-6 pl-4">
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '.5rem', flexWrap: 'wrap' }}>
