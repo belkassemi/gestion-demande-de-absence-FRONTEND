@@ -94,52 +94,71 @@ export default function EmployeeRequests() {
       {/* Modal Détails */}
       {selectedReq && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="modal" style={{ maxWidth: '560px' }}>
             <div className="modal-header">
               <h2>Détails Demande #{selectedReq.id}</h2>
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
-            
-            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
-              <div className="flex flex-col gap-1">
-                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Type d'absence</span>
-                <span className="font-semibold text-base">{selectedReq.absence_type?.name}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Durée totale</span>
-                <span className="font-semibold text-base">{selectedReq.days_count} jours</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de début</span>
-                <span className="font-medium text-sm">{selectedReq.start_date}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de fin</span>
-                <span className="font-medium text-sm">{selectedReq.end_date}</span>
-              </div>
-              
-              {(selectedReq.document_path || selectedReq.reason) && (
-                <div className="col-span-2 border-t pt-4 mt-2 border-border/50 flex flex-col gap-4">
-                  {selectedReq.document_path && (
-                    <div>
-                      <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-2">Document Justificatif</span>
-                      <a href={`${STORAGE_URL}/${selectedReq.document_path}`} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm inline-flex items-center gap-2 hover:bg-white transition-colors">
-                        <FileText size={16} /> Voir le document
-                      </a>
-                    </div>
-                  )}
 
-                  <div>
-                    <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif</span>
-                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
-                      {selectedReq.reason || "Aucun motif fourni"}
-                    </p>
-                  </div>
+            {/* Info grid — no outer border, clean background */}
+            <div style={{
+              display: 'grid', gridTemplateColumns: '1fr 1fr',
+              gap: '1.25rem 2rem',
+              background: 'var(--primary-bg)',
+              borderRadius: 'var(--radius)',
+              padding: '1.25rem 1.5rem',
+              marginBottom: '1.25rem'
+            }}>
+              <div>
+                <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '4px' }}>Type d'absence</span>
+                <span style={{ fontWeight: 600 }}>{selectedReq.absence_type?.name}</span>
+              </div>
+              <div>
+                <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '4px' }}>Durée totale</span>
+                <span style={{ fontWeight: 600 }}>{selectedReq.days_count} jours</span>
+              </div>
+              <div>
+                <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '4px' }}>Date de début</span>
+                <span>{new Date(selectedReq.start_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+              </div>
+              <div>
+                <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '4px' }}>Date de fin</span>
+                <span>{new Date(selectedReq.end_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+              </div>
+
+              {/* Statut */}
+              <div style={{ gridColumn: 'span 2', paddingTop: '.75rem', borderTop: '1px solid var(--border)' }}>
+                <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '6px' }}>Statut actuel</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                  <StatusBadge status={selectedReq.status} />
+                  {selectedReq.status === 'pending' && (
+                    <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                      — En attente de validation niveau {selectedReq.current_level}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {selectedReq.document_path && (
+                <div style={{ gridColumn: 'span 2' }}>
+                  <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '8px' }}>Document justificatif</span>
+                  <a href={`${STORAGE_URL}/${selectedReq.document_path}`} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm inline-flex items-center gap-2">
+                    <FileText size={15} /> Voir le document
+                  </a>
+                </div>
+              )}
+
+              {selectedReq.reason && (
+                <div style={{ gridColumn: 'span 2' }}>
+                  <span style={{ display: 'block', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--text-muted)', marginBottom: '6px' }}>Motif</span>
+                  <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', fontStyle: 'italic', background: 'var(--surface)', padding: '10px 14px', borderRadius: 'var(--radius-sm)' }}>
+                    {selectedReq.reason}
+                  </p>
                 </div>
               )}
             </div>
 
-            <h3 className="font-semibold text-sm border-b pb-2 mb-4" style={{ borderBottom: '1px solid var(--border)' }}>
+            <h3 style={{ fontWeight: 600, fontSize: '13px', borderBottom: '1px solid var(--border)', paddingBottom: '8px', marginBottom: '14px' }}>
               Circuit de validation
             </h3>
             <div className="mb-4">

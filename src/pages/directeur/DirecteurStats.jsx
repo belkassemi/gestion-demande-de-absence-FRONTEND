@@ -143,6 +143,31 @@ export default function DirecteurStats() {
           ) : <p className="text-muted text-sm">Aucune donnée.</p>}
         </div>
       </div>
+
+      {/* Top Employees */}
+      {(stats.top_employees || []).length > 0 && (
+        <div className="card" style={{ marginTop: '1.5rem' }}>
+          <h3 className="font-semibold mb-4 text-sm">Top employés — jours d'absence approuvés ({year})</h3>
+          <table className="w-full text-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Employé</th>
+                <th>Jours approuvés</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stats.top_employees.map((e, i) => (
+                <tr key={i}>
+                  <td className="text-muted font-bold">{i + 1}</td>
+                  <td className="font-semibold">{e.name}</td>
+                  <td style={{ color: 'var(--primary)', fontWeight: 700 }}>{e.total_days} j</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

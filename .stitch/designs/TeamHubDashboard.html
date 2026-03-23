@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TeamHub HR Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#c8d8f3",
+              "secondary": "#4d5d73",
+              "inverse-surface": "#060e20",
+              "secondary-fixed-dim": "#bacae4",
+              "outline": "#6f768e",
+              "surface-container": "#e2e7ff",
+              "primary-fixed": "#69f6b8",
+              "inverse-on-surface": "#959cb5",
+              "on-secondary-container": "#3c4c61",
+              "on-primary-container": "#005a3c",
+              "on-surface": "#272e42",
+              "on-tertiary": "#dcf7ff",
+              "on-error": "#ffefee",
+              "surface-container-low": "#eef0ff",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed-dim": "#58e7ab",
+              "secondary-fixed": "#c8d8f3",
+              "surface": "#f6f6ff",
+              "tertiary-dim": "#005866",
+              "inverse-primary": "#69f6b8",
+              "surface-container-highest": "#d1dcff",
+              "surface-tint": "#006947",
+              "surface-bright": "#f6f6ff",
+              "on-secondary-fixed": "#29394e",
+              "outline-variant": "#a5adc6",
+              "error-dim": "#9f0519",
+              "on-tertiary-fixed-variant": "#005360",
+              "tertiary": "#006575",
+              "on-primary-fixed-variant": "#006544",
+              "surface-container-high": "#d9e2ff",
+              "surface-dim": "#c7d4fa",
+              "on-secondary-fixed-variant": "#46556b",
+              "background": "#f6f6ff",
+              "on-tertiary-container": "#004955",
+              "secondary-dim": "#415166",
+              "on-background": "#272e42",
+              "surface-variant": "#d1dcff",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "primary-dim": "#005c3d",
+              "on-primary-fixed": "#00452d",
+              "on-primary": "#c8ffe0",
+              "on-secondary": "#edf3ff",
+              "on-surface-variant": "#535b71",
+              "tertiary-fixed-dim": "#00cdeb",
+              "primary-container": "#69f6b8",
+              "tertiary-container": "#00dcfd",
+              "error-container": "#fb5151",
+              "primary": "#006947",
+              "on-tertiary-fixed": "#00343c",
+              "tertiary-fixed": "#00dcfd"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Inter', sans-serif; }
+      .font-manrope { font-family: 'Manrope', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+      }
+      .cloud-shadow {
+        box-shadow: 0 12px 32px -4px rgba(39, 46, 66, 0.06);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col h-full border-r border-slate-200/50 dark:border-slate-800/50 z-50">
+<div class="px-6 py-8">
+<h1 class="text-xl font-extrabold text-emerald-800 dark:text-emerald-300 font-manrope">TeamHub</h1>
+<p class="text-xs text-on-surface-variant font-label tracking-wider uppercase mt-1">HR Management</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-transform duration-200 hover:translate-x-1 group" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span class="font-manrope text-sm antialiased">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-transform duration-200 hover:translate-x-1 group" href="#">
+<span class="material-symbols-outlined text-lg">mail</span>
+<span class="font-manrope text-sm antialiased">Inbox</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-transform duration-200 hover:translate-x-1 group" href="#">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+<span class="font-manrope text-sm antialiased">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-emerald-900 dark:text-emerald-100 font-bold border-l-4 border-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/20 transition-transform duration-200 hover:translate-x-1 group" href="#">
+<span class="material-symbols-outlined text-lg">group</span>
+<span class="font-manrope text-sm antialiased">Employees</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-transform duration-200 hover:translate-x-1 group" href="#">
+<span class="material-symbols-outlined text-lg">access_time</span>
+<span class="font-manrope text-sm antialiased">Attendance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-transform duration-200 hover:translate-x-1 group" href="#">
+<span class="material-symbols-outlined text-lg">insights</span>
+<span class="font-manrope text-sm antialiased">Performance</span>
+</a>
+</nav>
+<div class="p-6">
+<button class="w-full py-4 px-4 bg-primary text-on-primary rounded-full font-bold flex items-center justify-center gap-2 active:scale-95 duration-200 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">person_add</span>
+<span class="text-sm">Add New Employee</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 w-full z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-8 py-4 w-full">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-full py-2.5 pl-10 pr-4 focus:ring-2 focus:ring-primary/40 text-sm font-body" placeholder="Search anything" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/30">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface font-manrope">Davis Levin</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Senior HR Manager</p>
+</div>
+<img alt="User profile avatar" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" data-alt="professional portrait of a middle-aged man with short dark hair wearing a minimalist white shirt in a modern bright office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw6QcqwTLeACBQq3PVVEPOUF2FiLbQFsUXWklN0HqPLSB70C2di_6RmJ9u81FmoDimHLiDmOoehCjp-NK4VyhRa5zDbmBjDsT2bERRZxJtpiRS2oKzYoXsDGudUTbYuelsbedcg4lfR0fZUVvY7lIt_585qKX8ism3XnJ4670V-5EzLMbk8j6ilkuJxy0TrdiYS-i0msGALwwuchp6M8XkVOFX6vyOc57AMcgKqQyICJlraTKkW7xA4-u-IO4Gzps4ILLfzPEaXNE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-[1400px] mx-auto space-y-8">
+<!-- Hero Section -->
+<section class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-extrabold text-on-surface font-manrope tracking-tight">Hello Davis! Good Morning</h2>
+<p class="text-on-surface-variant mt-2 font-body">Here's what's happening with your team today.</p>
+</div>
+<div class="flex gap-2">
+<span class="px-4 py-2 bg-tertiary-container text-on-tertiary-container rounded-full text-xs font-bold font-manrope flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">mood</span>
+                        Team Mood: Positive
+                    </span>
+</div>
+</section>
+<!-- Stat Cards -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Total Employees -->
+<div class="bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow hover:translate-y-[-4px] transition-transform duration-300">
+<div class="flex justify-between items-start mb-8">
+<div class="p-3 bg-primary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-primary" data-weight="fill">group</span>
+</div>
+<span class="text-xs font-bold text-primary font-manrope bg-primary-container/20 px-2 py-1 rounded-lg">+4 this month</span>
+</div>
+<p class="text-label-md text-on-surface-variant font-medium">Total Employees</p>
+<h3 class="text-4xl font-extrabold text-on-surface mt-1 font-manrope">128</h3>
+</div>
+<!-- Attendance -->
+<div class="bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow hover:translate-y-[-4px] transition-transform duration-300">
+<div class="flex justify-between items-start mb-8">
+<div class="p-3 bg-tertiary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-tertiary" data-weight="fill">verified</span>
+</div>
+<span class="text-xs font-bold text-on-surface-variant font-manrope">On Time</span>
+</div>
+<p class="text-label-md text-on-surface-variant font-medium">Attendance</p>
+<h3 class="text-4xl font-extrabold text-on-surface mt-1 font-manrope">92%</h3>
+</div>
+<!-- Leave Requests -->
+<div class="bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow hover:translate-y-[-4px] transition-transform duration-300">
+<div class="flex justify-between items-start mb-8">
+<div class="p-3 bg-error-container/10 rounded-2xl">
+<span class="material-symbols-outlined text-error" data-weight="fill">pending_actions</span>
+</div>
+<span class="text-xs font-bold text-error font-manrope">Action Required</span>
+</div>
+<p class="text-label-md text-on-surface-variant font-medium">Leave Requests</p>
+<h3 class="text-4xl font-extrabold text-on-surface mt-1 font-manrope">1 <span class="text-lg font-medium text-on-surface-variant">Pending</span></h3>
+</div>
+<!-- Job Applicants -->
+<div class="bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow hover:translate-y-[-4px] transition-transform duration-300">
+<div class="flex justify-between items-start mb-8">
+<div class="p-3 bg-secondary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-secondary" data-weight="fill">person_search</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 font-manrope">+12%</span>
+</div>
+<p class="text-label-md text-on-surface-variant font-medium">Job Applicants</p>
+<h3 class="text-4xl font-extrabold text-on-surface mt-1 font-manrope">24</h3>
+</div>
+</section>
+<!-- Main Bento Grid -->
+<section class="grid grid-cols-12 gap-6">
+<!-- Calendar (4 cols) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-manrope font-bold text-on-surface">June 2035</h4>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-container rounded-lg"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-1 hover:bg-surface-container rounded-lg"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2 text-center text-xs font-bold text-on-surface-variant mb-4">
+<span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span><span>SU</span>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<!-- Simplified Calendar Mosaic -->
+<div class="h-10 flex items-center justify-center rounded-lg text-xs opacity-20">28</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs opacity-20">29</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs opacity-20">30</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">1</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs bg-primary-container text-on-primary-container font-bold">2</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">3</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">4</div>
+<!-- ... rest of days as visual placeholders ... -->
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">5</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs bg-surface-container-low">6</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">7</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs bg-primary text-on-primary font-bold shadow-md shadow-primary/20">8</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">9</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">10</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">11</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">12</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">13</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">14</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">15</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">16</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">17</div>
+<div class="h-10 flex items-center justify-center rounded-lg text-xs">18</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/10">
+<h5 class="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-4">Upcoming events</h5>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-10 bg-primary rounded-full"></div>
+<div>
+<p class="text-sm font-bold text-on-surface font-manrope">Team Offsite</p>
+<p class="text-xs text-on-surface-variant">Tomorrow, 10:00 AM</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Attendance Report Chart (8 cols) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="font-manrope font-bold text-on-surface text-lg">Attendance Report</h4>
+<p class="text-sm text-on-surface-variant">Last 7 working days</p>
+</div>
+<button class="text-primary text-sm font-bold flex items-center gap-1">View Details <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+<!-- Visual Bar Chart -->
+<div class="flex items-end justify-between h-48 gap-4 px-4">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-xl h-[60%] hover:bg-primary/40 transition-colors"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">MON</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-xl h-[75%] hover:bg-primary/40 transition-colors"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">TUE</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-xl h-[95%] shadow-lg shadow-primary/10"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">WED</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-xl h-[85%] hover:bg-primary/40 transition-colors"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">THU</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-xl h-[80%] hover:bg-primary/40 transition-colors"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">FRI</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tertiary/20 rounded-t-xl h-[40%]"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">SAT</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tertiary/20 rounded-t-xl h-[30%]"></div>
+<span class="text-[10px] text-on-surface-variant font-bold">SUN</span>
+</div>
+</div>
+</div>
+<!-- Team Performance Line Graph (6 cols) -->
+<div class="col-span-12 lg:col-span-6 bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow">
+<h4 class="font-manrope font-bold text-on-surface mb-8">Team Performance</h4>
+<div class="relative h-48 flex items-end">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 400 100">
+<path d="M 0 80 Q 50 10, 100 60 T 200 30 T 300 70 T 400 20" fill="none" stroke="url(#emeraldGradient)" stroke-linecap="round" stroke-width="4"></path>
+<defs>
+<lineargradient id="emeraldGradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" style="stop-color:#006947;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#69f6b8;stop-opacity:1"></stop>
+</lineargradient>
+</defs>
+<circle class="shadow-xl" cx="200" cy="30" fill="#006947" r="6"></circle>
+</svg>
+<div class="absolute top-4 left-1/2 -translate-x-1/2 bg-inverse-surface text-surface text-[10px] px-2 py-1 rounded font-bold">Peak: 94%</div>
+</div>
+<div class="flex justify-between mt-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-xs text-on-surface-variant font-medium">Efficiency Index</span>
+</div>
+<span class="text-xs text-on-surface-variant">Avg: 88%</span>
+</div>
+</div>
+<!-- Schedules List (6 cols) -->
+<div class="col-span-12 lg:col-span-6 bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-manrope font-bold text-on-surface">Daily Schedules</h4>
+<button class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-sm">more_vert</span></button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-3 hover:bg-surface-container-low rounded-xl transition-colors">
+<img alt="Employee" class="w-10 h-10 rounded-full" data-alt="close-up portrait of a young professional woman with glasses smiling confidently in a bright minimalist office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRrSaZVZnqnVAtccjDTg8BMe6jfjQqBftBedJG9-C7W23pH1rCSO5Q5VFWc7pkmyeG9_MJ0UsBoglXmYUBMOogJCzQLC5SkSJZwAp93iX43an5w6W0uPgdpvj9R6bpIswhxDELxjPdJzho_s5BzhjBQiQ5Zs79iWN9JuyYfYrO61buC409DDtx_VDy9Xbn8LODxLgULaXaG49MC1HTF9WoaZRNqESWNYDhxX-Ai7vlCVKyERUNlBaIVgRNS8_LKhqXWxFFf1biWso"/>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Sarah Connor</p>
+<p class="text-xs text-on-surface-variant">Design Sync • 09:30 AM</p>
+</div>
+<span class="px-2 py-1 bg-primary-fixed-dim/30 text-on-primary-container text-[10px] font-bold rounded-md">REMOTE</span>
+</div>
+<div class="flex items-center gap-4 p-3 hover:bg-surface-container-low rounded-xl transition-colors">
+<img alt="Employee" class="w-10 h-10 rounded-full" data-alt="headshot of a young male software developer with a friendly expression in a modern creative workspace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJDKPPC_3edKY4XD_pkKFwbTkdPjjE0MGDPdCnSWJruMXjguxU5aeX7jvVrrV6xrbKgn7Chb5iW6bSaEALEt23_fboHtYazDbHFcN4npzzrPUa6hvPpcESSeoR1YwEpCjHRlryUuSKEyAAty_vVbt2SrKBDknGkEiAaFhi_UHBD8PxaqEUPfC3im4susTTzuzjOk706vvt2NtTTnH1UBynX89OVIcyWvJCTTk_QPkgY1pmIjokyKVWewPPafx-5tJtRQQM1r2bKKw"/>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">James Miller</p>
+<p class="text-xs text-on-surface-variant">Code Review • 11:00 AM</p>
+</div>
+<span class="px-2 py-1 bg-surface-container text-on-surface-variant text-[10px] font-bold rounded-md">ON-SITE</span>
+</div>
+</div>
+</div>
+<!-- Small Grid Row -->
+<!-- Employee Satisfaction Gauge (4 cols) -->
+<div class="col-span-12 md:col-span-6 lg:col-span-4 bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow">
+<h4 class="font-manrope font-bold text-on-surface mb-6">Employee Satisfaction</h4>
+<div class="flex flex-col items-center justify-center pt-4">
+<div class="relative w-32 h-32">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="64" cy="64" fill="transparent" r="56" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="64" cy="64" fill="transparent" r="56" stroke="currentColor" stroke-dasharray="351.85" stroke-dashoffset="70.37" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-extrabold text-on-surface font-manrope">4.8</span>
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Excellent</span>
+</div>
+</div>
+<p class="text-xs text-center text-on-surface-variant mt-6 px-4">Based on pulse survey from 120 employees this week.</p>
+</div>
+</div>
+<!-- Employment Status Pie (8 cols) -->
+<div class="col-span-12 md:col-span-6 lg:col-span-8 bg-surface-container-lowest p-6 rounded-DEFAULT cloud-shadow">
+<div class="flex justify-between items-start mb-8">
+<h4 class="font-manrope font-bold text-on-surface">Employment Status</h4>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Full-time</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Contract</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="relative w-40 h-40">
+<svg class="w-full h-full" viewbox="0 0 36 36">
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-width="4"></path>
+<path class="text-tertiary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-75" stroke-width="4"></path>
+</svg>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-y-6">
+<div>
+<p class="text-2xl font-extrabold text-on-surface font-manrope">96</p>
+<p class="text-xs text-on-surface-variant font-medium">Full-time</p>
+</div>
+<div>
+<p class="text-2xl font-extrabold text-on-surface font-manrope">24</p>
+<p class="text-xs text-on-surface-variant font-medium">Contract</p>
+</div>
+<div>
+<p class="text-2xl font-extrabold text-on-surface font-manrope">8</p>
+<p class="text-xs text-on-surface-variant font-medium">Part-time</p>
+</div>
+<div>
+<p class="text-2xl font-extrabold text-on-surface font-manrope">12</p>
+<p class="text-xs text-on-surface-variant font-medium">Internship</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
