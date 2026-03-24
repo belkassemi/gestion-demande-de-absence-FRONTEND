@@ -95,6 +95,10 @@ export const absenceApi = apiSlice.injectEndpoints({
       query: ({ id, ...data }) => ({ url: `/directeur/requests/${id}/review`, method: 'POST', body: data }),
       invalidatesTags: ['DirecteurRequests', 'AbsenceRequest', 'Stats'],
     }),
+    getDirecteurCalendar: builder.query({
+      query: (params = {}) => ({ url: '/directeur/calendar', params }),
+      providesTags: ['DirecteurRequests'],
+    }),
     getDirecteurDashboard: builder.query({
       query: () => '/directeur/dashboard',
       providesTags: ['Stats'],
@@ -184,6 +188,10 @@ export const absenceApi = apiSlice.injectEndpoints({
     }),
 
     // ── Admin – Dashboard & Global Data ──────────────────────────────────────
+    getAdminCalendar: builder.query({
+      query: (params = {}) => ({ url: '/admin/calendar', params }),
+      providesTags: ['AbsenceRequest'],
+    }),
     getAdminDashboard: builder.query({
       query: () => '/admin/dashboard',
       providesTags: ['Stats'],
@@ -243,6 +251,7 @@ export const {
   useGetTeamCalendarQuery,
   useGetTeamHistoryQuery,
   // Directeur
+  useGetDirecteurCalendarQuery,
   useGetDirecteurPendingRequestsQuery,
   useGetDirecteurRequestQuery,
   useReviewDirecteurRequestMutation,
@@ -266,6 +275,7 @@ export const {
   useUpdateServiceMutation,
   useDeleteServiceMutation,
   // Admin – Dashboard & Data
+  useGetAdminCalendarQuery,
   useGetAdminDashboardQuery,
   useGetAdminStatisticsQuery,
   useGetAdminAllRequestsQuery,

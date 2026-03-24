@@ -4,6 +4,7 @@ import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { STORAGE_URL } from '../../features/api/apiSlice';
 import { FileText } from 'lucide-react';
+import { formatDate } from '../../lib/utils';
 
 export default function EmployeeRequests() {
   const [page, setPage] = useState(1);
@@ -55,8 +56,8 @@ export default function EmployeeRequests() {
                 <tr key={req.id}>
                   <td>#{req.id}</td>
                   <td className="font-semibold">{req.absence_type?.name}</td>
-                  <td>{req.start_date}</td>
-                  <td>{req.end_date}</td>
+                  <td>{formatDate(req.start_date)}</td>
+                  <td>{formatDate(req.end_date)}</td>
                   <td>{req.days_count}</td>
                   <td><StatusBadge status={req.status} /></td>
                   <td>

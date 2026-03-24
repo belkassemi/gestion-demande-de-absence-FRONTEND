@@ -6,7 +6,7 @@ import { useLogoutMutation } from '../features/api/absenceApi';
 import {
   LayoutDashboard, List, Plus, Clock, Calendar, History,
   CheckSquare, BarChart2, Building2, Users, FolderOpen,
-  LogOut, FileText, ShieldCheck, BookOpen
+  LogOut, FileText, ShieldCheck, BookOpen, CalendarDays
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,7 @@ const NAV_BY_ROLE = {
     { to: '/directeur', icon: <Building2 size={18} />, label: 'Vue Exécutive' },
     { to: '/directeur/pending', icon: <CheckSquare size={18} />, label: 'Approbations finales' },
     { to: '/directeur/stats', icon: <BarChart2 size={18} />, label: 'Statistiques globales' },
+    { to: '/directeur/calendar', icon: <CalendarDays size={18} />, label: 'Calendrier' },
   ],
   admin: [
     { to: '/admin', icon: <LayoutDashboard size={18} />, label: 'Tableau de bord' },
@@ -35,6 +36,7 @@ const NAV_BY_ROLE = {
     { to: '/admin/types', icon: <BookOpen size={18} />, label: 'Types d\'absence' },
     { to: '/admin/requests', icon: <FileText size={18} />, label: 'Toutes les demandes' },
     { to: '/admin/audit', icon: <ShieldCheck size={18} />, label: 'Journal d\'audit' },
+    { to: '/admin/calendar', icon: <CalendarDays size={18} />, label: 'Calendrier' },
   ],
 };
 

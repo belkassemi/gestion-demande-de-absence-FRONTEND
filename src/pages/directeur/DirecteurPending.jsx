@@ -4,6 +4,7 @@ import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { CheckCircle, FileText } from 'lucide-react';
 import { STORAGE_URL } from '../../features/api/apiSlice';
+import { formatDate } from '../../lib/utils';
 
 export default function DirecteurPending() {
   const { data, isLoading } = useGetDirecteurPendingRequestsQuery();
@@ -98,7 +99,7 @@ export default function DirecteurPending() {
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Période du congé</span>
                 <span className="font-medium text-sm">
-                  {selectedReq.start_date} <span className="text-muted mx-1">au</span> {selectedReq.end_date}
+                  {formatDate(selectedReq.start_date)} <span className="text-muted mx-1">au</span> {formatDate(selectedReq.end_date)}
                 </span>
               </div>
               

@@ -4,6 +4,7 @@ import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { FileText } from 'lucide-react';
 import { STORAGE_URL } from '../../features/api/apiSlice';
+import { formatDate } from '../../lib/utils';
 
 export default function AdminAllRequests() {
   const [statusFilter, setStatusFilter] = useState('');
@@ -64,7 +65,7 @@ export default function AdminAllRequests() {
                   <td className="font-semibold">{r.user?.name}</td>
                   <td className="text-muted text-xs">{r.user?.department?.name || '-'}</td>
                   <td>{r.absence_type?.name}</td>
-                  <td className="text-xs">{r.start_date} → {r.end_date}</td>
+                  <td className="text-xs">{formatDate(r.start_date)} → {formatDate(r.end_date)}</td>
                   <td className="text-center"><span className="badge badge-info">{r.days_count}j</span></td>
                   <td className="text-center text-xs font-semibold">N{r.current_level}</td>
                   <td><StatusBadge status={r.status} /></td>
@@ -104,11 +105,11 @@ export default function AdminAllRequests() {
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de début</span>
-                <span className="font-medium text-sm">{selectedReq.start_date}</span>
+                <span className="font-medium text-sm">{formatDate(selectedReq.start_date)}</span>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de fin</span>
-                <span className="font-medium text-sm">{selectedReq.end_date}</span>
+                <span className="font-medium text-sm">{formatDate(selectedReq.end_date)}</span>
               </div>
               
               {(selectedReq.document_path || selectedReq.reason) && (
