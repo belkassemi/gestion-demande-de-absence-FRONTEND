@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGetDirecteurStatisticsQuery } from '../../features/api/absenceApi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import { Activity, ClipboardList, TrendingUp } from 'lucide-react';
+import { Layers, ClipboardList, TrendingUp } from 'lucide-react';
 
 export default function DirecteurStats() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -55,14 +55,14 @@ export default function DirecteurStats() {
         </div>
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp size={28} className="opacity-80" />
+            <TrendingUp size={28} className="text-white opacity-80" />
             <div className="stat-label flex-1 text-white opacity-90">Taux d'approbation</div>
           </div>
           <div className="stat-value">{approvalRate}%</div>
         </div>
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--info)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
-            <Activity size={28} style={{ color: 'var(--info)' }} />
+            <Layers size={28} style={{ color: 'var(--info)' }} />
             <div className="stat-label flex-1">Types distincts</div>
           </div>
           <div className="stat-value" style={{ color: 'var(--info)' }}>{(stats.by_type || []).length}</div>

@@ -22,21 +22,21 @@ export default function AdminOverview() {
           </div>
           <div className="stat-value">{kpi?.total_requests ?? '–'}</div>
         </div>
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--warning)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
             <Clock size={28} style={{ color: 'var(--warning)' }} />
             <div className="stat-label flex-1">En attente</div>
           </div>
           <div className="stat-value" style={{ color: 'var(--warning)' }}>{kpi?.pending ?? '–'}</div>
         </div>
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--success)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
             <CheckCircle size={28} style={{ color: 'var(--success)' }} />
             <div className="stat-label flex-1">Approuvées</div>
           </div>
           <div className="stat-value" style={{ color: 'var(--success)' }}>{kpi?.approved ?? '–'}</div>
         </div>
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--error)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
             <XCircle size={28} style={{ color: 'var(--error)' }} />
             <div className="stat-label flex-1">Rejetées</div>
