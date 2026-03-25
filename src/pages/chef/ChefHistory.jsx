@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGetTeamHistoryQuery } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
+import { formatDate } from '../../lib/utils';
 
 export default function ChefHistory() {
   const [page, setPage] = useState(1);
@@ -50,7 +51,7 @@ export default function ChefHistory() {
                  <td>#{req.id}</td>
                  <td className="font-semibold">{req.user?.name}</td>
                  <td>{req.absence_type?.name}</td>
-                 <td>{req.start_date} au {req.end_date}</td>
+                 <td>{formatDate(req.start_date)} au {formatDate(req.end_date)}</td>
                  <td><StatusBadge status={req.status} /></td>
                </tr>
             ))}

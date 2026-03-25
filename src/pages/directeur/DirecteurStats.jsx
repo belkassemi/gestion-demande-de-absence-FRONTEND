@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGetDirecteurStatisticsQuery } from '../../features/api/absenceApi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import { Activity, ClipboardList, TrendingUp } from 'lucide-react';
+import { Layers, ClipboardList, TrendingUp } from 'lucide-react';
 
 export default function DirecteurStats() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -55,14 +55,14 @@ export default function DirecteurStats() {
         </div>
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp size={28} className="opacity-80" />
+            <TrendingUp size={28} className="opacity-80" color="white" />
             <div className="stat-label flex-1 text-white opacity-90">Taux d'approbation</div>
           </div>
-          <div className="stat-value">{approvalRate}%</div>
+          <div className="stat-value text-white">{approvalRate}%</div>
         </div>
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--info)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
-            <Activity size={28} style={{ color: 'var(--info)' }} />
+            <Layers size={28} style={{ color: 'var(--info)' }} />
             <div className="stat-label flex-1">Types distincts</div>
           </div>
           <div className="stat-value" style={{ color: 'var(--info)' }}>{(stats.by_type || []).length}</div>
@@ -90,7 +90,7 @@ export default function DirecteurStats() {
         ) : <p className="text-muted text-sm">Aucune donnée pour {year}.</p>}
       </div>
 
-      <div className="grid-2" style={{ gap: '1.5rem' }}>
+      <div className="grid-2" style={{ gap: '1.5rem', margin: '2rem 0' }}>
         {/* By Department */}
         <div className="card">
           <h3 className="font-semibold mb-4 text-sm">Par département</h3>
@@ -143,6 +143,31 @@ export default function DirecteurStats() {
           ) : <p className="text-muted text-sm">Aucune donnée.</p>}
         </div>
       </div>
+
+      {/* Top Employees */}
+      {(stats.top_employees || []).length > 0 && (
+        <div className="card" style={{ marginTop: '1.5rem' }}>
+          <h3 className="font-semibold mb-4 text-sm">Top employés — jours d'absence approuvés ({year})</h3>
+          <table className="w-full text-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Employé</th>
+                <th>Jours approuvés</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stats.top_employees.map((e, i) => (
+                <tr key={i}>
+                  <td className="text-muted font-bold">{i + 1}</td>
+                  <td className="font-semibold">{e.name}</td>
+                  <td style={{ color: 'var(--primary)', fontWeight: 700 }}>{e.total_days} j</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

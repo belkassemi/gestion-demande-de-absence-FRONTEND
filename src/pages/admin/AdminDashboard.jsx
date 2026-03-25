@@ -8,6 +8,7 @@ import AdminServices      from './AdminServices';
 import AdminAbsenceTypes  from './AdminAbsenceTypes';
 import AdminAllRequests   from './AdminAllRequests';
 import AdminAuditLogs     from './AdminAuditLogs';
+import AdminCalendar      from './AdminCalendar';
 
 export default function AdminDashboard() {
   return (
@@ -21,6 +22,7 @@ export default function AdminDashboard() {
         <Route path="types"        element={<AdminAbsenceTypes />} />
         <Route path="requests"     element={<AdminAllRequests />} />
         <Route path="audit"        element={<AdminAuditLogs />} />
+        <Route path="calendar"     element={<AdminCalendar />} />
         <Route path="*"            element={<Navigate to="overview" replace />} />
       </Routes>
     </AppLayout>

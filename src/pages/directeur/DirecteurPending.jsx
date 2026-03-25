@@ -4,6 +4,7 @@ import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { CheckCircle, FileText } from 'lucide-react';
 import { STORAGE_URL } from '../../features/api/apiSlice';
+import { formatDate } from '../../lib/utils';
 
 export default function DirecteurPending() {
   const { data, isLoading } = useGetDirecteurPendingRequestsQuery();
@@ -13,7 +14,7 @@ export default function DirecteurPending() {
 
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = data?.data || [];
+  const requests = data || [];
 
   const handleReview = async (action) => {
     try {
@@ -28,7 +29,7 @@ export default function DirecteurPending() {
 
   return (
     <div>
-      <h2 className="font-bold mb-6">Demandes en attente de validation finale (Niveau 3)</h2>
+      <h2 className="font-bold mb-6">Demandes en attente de validation finale (Niveau 2)</h2>
 
       <div className="card text-sm" style={{ padding: 0, overflow: 'hidden' }}>
         <table className="w-full">
@@ -39,7 +40,7 @@ export default function DirecteurPending() {
               <th>Département</th>
               <th>Type</th>
               <th>Jours</th>
-              <th>Avis RH</th>
+              <th>Avis Chef Service</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -47,8 +48,8 @@ export default function DirecteurPending() {
             {requests.length === 0 ? (
               <tr><td colSpan="7" className="text-center text-muted py-8">Aucune demande en attente</td></tr>
             ) : requests.map(req => {
-              // Extract RH approval
-              const rhApproval = req.approvals?.find(a => a.level === 2);
+              // Extract Chef Service approval (level 1)
+              const chefApproval = req.approvals?.find(a => a.level === 1);
               
               return (
                 <tr key={req.id}>
@@ -58,7 +59,7 @@ export default function DirecteurPending() {
                   <td>{req.absence_type?.name}</td>
                   <td className="font-bold">{req.days_count} j</td>
                   <td className="text-xs">
-                    {rhApproval ? (
+                    {chefApproval && chefApproval.status === 'approved' ? (
                       <span className="text-success flex items-center gap-1">
                         <CheckCircle size={14} /> Favorable
                       </span>
@@ -82,7 +83,7 @@ export default function DirecteurPending() {
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
             
-            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
+            <div className="grid-2 mb-6 text-sm" style={{ background: 'var(--primary-bg)', borderRadius: 'var(--radius)', padding: '1.25rem 1.5rem', gap: '1.25rem 2rem' }}>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Employé</span>
                 <span className="font-semibold text-base">{selectedReq.user?.name}</span>
@@ -98,7 +99,7 @@ export default function DirecteurPending() {
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Période du congé</span>
                 <span className="font-medium text-sm">
-                  {selectedReq.start_date} <span className="text-muted mx-1">au</span> {selectedReq.end_date}
+                  {formatDate(selectedReq.start_date)} <span className="text-muted mx-1">au</span> {formatDate(selectedReq.end_date)}
                 </span>
               </div>
               
@@ -115,7 +116,7 @@ export default function DirecteurPending() {
 
                   <div>
                     <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif de l'employé</span>
-                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', fontStyle: 'italic', background: 'var(--surface)', padding: '10px 14px', borderRadius: 'var(--radius-sm)' }}>
                       {selectedReq.reason || "Aucun motif fourni"}
                     </p>
                   </div>

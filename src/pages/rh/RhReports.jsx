@@ -47,7 +47,7 @@ export default function RhReports() {
       <div className="grid-3 mb-6">
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <ClipboardList size={28} className="opacity-80 text-white" />
+            <ClipboardList size={28} className="opacity-80" color="white" />
             <div className="stat-label flex-1 text-white opacity-90">Total Demandes Période</div>
           </div>
           <div className="stat-value text-white">{stats.total_requests}</div>
@@ -68,7 +68,7 @@ export default function RhReports() {
         </div>
       </div>
 
-      <div className="grid-2">
+      <div className="grid-2" style={{ margin: '2rem 0' }}>
          <div className="card">
            <h3 className="font-semibold mb-4 text-sm">Absences par Département</h3>
            <div style={{ height: '300px' }}>

@@ -15,10 +15,10 @@ export default function EmployeeOverview() {
       <div className="grid-4 mb-6">
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <CalendarCheck size={28} className="opacity-80" />
+            <CalendarCheck size={28} className="opacity-80" color="white" />
             <div className="stat-label flex-1 text-white opacity-90">Jours Approuvés</div>
           </div>
-          <div className="stat-value">{stats.total_days}</div>
+          <div className="stat-value text-white">{stats.total_days}</div>
         </div>
         <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
@@ -43,7 +43,7 @@ export default function EmployeeOverview() {
         </div>
       </div>
 
-      <div className="grid-2">
+      <div className="grid-2" style={{ margin: '2rem 0' }}>
         <div className="card">
           <h3 className="font-semibold mb-4 text-sm">Répartition par type</h3>
           <table className="w-full text-sm">

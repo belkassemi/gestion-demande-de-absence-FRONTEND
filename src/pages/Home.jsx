@@ -28,13 +28,12 @@ export default function Home() {
       const data = await loginApi({ email, password }).unwrap();
       dispatch(setCredentials({ user: data.user, token: data.token }));
       const ROLE_HOME = {
-        employee: '/employee',
-        chef: '/chef',
-        rh: '/rh',
-        directeur: '/directeur',
-        admin: '/admin'
+        employee:     '/employee/requests',
+        chef_service: '/chef-service',
+        directeur:    '/directeur',
+        admin:        '/admin'
       };
-      navigate(ROLE_HOME[data.user.role] || '/employee');
+      navigate(ROLE_HOME[data.user.role] || '/employee/requests');
     } catch (err) {
       setErrorMsg(err?.data?.message || 'Identifiants incorrects.');
     } finally {

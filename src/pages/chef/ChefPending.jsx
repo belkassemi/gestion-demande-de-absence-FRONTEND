@@ -5,6 +5,7 @@ import { STORAGE_URL } from '../../features/api/apiSlice';
 import { FileText } from 'lucide-react';
 
 import ApprovalTimeline from '../../components/ApprovalTimeline';
+import { formatDate } from '../../lib/utils';
 
 export default function ChefPending() {
   const { data, isLoading } = useGetChefPendingRequestsQuery();
@@ -53,9 +54,9 @@ export default function ChefPending() {
                 <td>#{req.id}</td>
                 <td className="font-semibold">{req.user?.name}</td>
                 <td>{req.absence_type?.name}</td>
-                <td>{req.start_date} au {req.end_date}</td>
+                <td>{formatDate(req.start_date)} au {formatDate(req.end_date)}</td>
                 <td className="text-center"><span className="badge badge-info">{req.days_count} j</span></td>
-                <td>{new Date(req.created_at).toLocaleDateString('fr-FR')}</td>
+                <td>{formatDate(req.created_at)}</td>
                 <td>
                   <button className="btn btn-primary btn-sm" onClick={() => setSelectedReq(req)}>Examiner</button>
                 </td>
@@ -73,7 +74,7 @@ export default function ChefPending() {
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
             
-            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
+            <div className="grid-2 mb-6 text-sm" style={{ background: 'var(--primary-bg)', borderRadius: 'var(--radius)', padding: '1.25rem 1.5rem', gap: '1.25rem 2rem' }}>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Type d'absence</span>
                 <span className="font-semibold text-base">{selectedReq.absence_type?.name}</span>
@@ -85,9 +86,9 @@ export default function ChefPending() {
               <div className="flex flex-col gap-1 col-span-2">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Période du congé</span>
                 <span className="font-medium text-sm">
-                  {new Date(selectedReq.start_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  {formatDate(selectedReq.start_date)}
                   <span className="mx-2 text-muted">au</span>
-                  {new Date(selectedReq.end_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  {formatDate(selectedReq.end_date)}
                 </span>
               </div>
               
@@ -104,7 +105,7 @@ export default function ChefPending() {
 
                   <div>
                     <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif de l'employé</span>
-                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', fontStyle: 'italic', background: 'var(--surface)', padding: '10px 14px', borderRadius: 'var(--radius-sm)' }}>
                       {selectedReq.reason || "Aucun motif fourni"}
                     </p>
                   </div>

@@ -4,6 +4,7 @@ import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { FileText } from 'lucide-react';
 import { STORAGE_URL } from '../../features/api/apiSlice';
+import { formatDate } from '../../lib/utils';
 
 export default function AdminAllRequests() {
   const [statusFilter, setStatusFilter] = useState('');
@@ -64,7 +65,7 @@ export default function AdminAllRequests() {
                   <td className="font-semibold">{r.user?.name}</td>
                   <td className="text-muted text-xs">{r.user?.department?.name || '-'}</td>
                   <td>{r.absence_type?.name}</td>
-                  <td className="text-xs">{r.start_date} → {r.end_date}</td>
+                  <td className="text-xs">{formatDate(r.start_date)} → {formatDate(r.end_date)}</td>
                   <td className="text-center"><span className="badge badge-info">{r.days_count}j</span></td>
                   <td className="text-center text-xs font-semibold">N{r.current_level}</td>
                   <td><StatusBadge status={r.status} /></td>
@@ -93,7 +94,7 @@ export default function AdminAllRequests() {
               <h2>Demande #{selectedReq.id} — {selectedReq.user?.name}</h2>
               <button className="modal-close" onClick={() => setSelectedReq(null)}>&times;</button>
             </div>
-            <div className="grid-2 mb-6 text-sm bg-gray-50 p-6 rounded-lg border border-border" style={{ background: 'var(--primary-bg)', gap: '1.5rem 2rem' }}>
+            <div className="grid-2 mb-6 text-sm" style={{ background: 'var(--primary-bg)', borderRadius: 'var(--radius)', padding: '1.25rem 1.5rem', gap: '1.25rem 2rem' }}>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Type d'absence</span>
                 <span className="font-semibold text-base">{selectedReq.absence_type?.name}</span>
@@ -104,11 +105,11 @@ export default function AdminAllRequests() {
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de début</span>
-                <span className="font-medium text-sm">{selectedReq.start_date}</span>
+                <span className="font-medium text-sm">{formatDate(selectedReq.start_date)}</span>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-muted text-[10px] font-bold uppercase tracking-wider">Date de fin</span>
-                <span className="font-medium text-sm">{selectedReq.end_date}</span>
+                <span className="font-medium text-sm">{formatDate(selectedReq.end_date)}</span>
               </div>
               
               {(selectedReq.document_path || selectedReq.reason) && (
@@ -124,7 +125,7 @@ export default function AdminAllRequests() {
 
                   <div>
                     <span className="text-muted text-[10px] font-bold uppercase tracking-wider block mb-1">Motif</span>
-                    <p className="text-sm leading-relaxed text-text-primary bg-white/50 p-3 rounded-md italic border border-dashed border-border/60">
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', fontStyle: 'italic', background: 'var(--surface)', padding: '10px 14px', borderRadius: 'var(--radius-sm)' }}>
                       {selectedReq.reason || "Aucun motif fourni"}
                     </p>
                   </div>

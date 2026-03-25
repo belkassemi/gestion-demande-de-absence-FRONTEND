@@ -14,7 +14,7 @@ export default function DirecteurOverview() {
 
       {/* KPI Cards */}
       <div className="grid-4 mb-6">
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--warning)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
             <Clock size={28} className="opacity-80" style={{ color: 'var(--warning)' }} />
             <div className="stat-label flex-1">En attente (Niveau 2)</div>
@@ -24,7 +24,7 @@ export default function DirecteurOverview() {
           </div>
         </div>
 
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--success)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
             <CheckCircle size={28} style={{ color: 'var(--success)' }} />
             <div className="stat-label flex-1">Approuvées (ce mois)</div>
@@ -34,7 +34,7 @@ export default function DirecteurOverview() {
           </div>
         </div>
 
-        <div className="stat-card" style={{ borderLeft: '4px solid var(--error)' }}>
+        <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
             <XCircle size={28} style={{ color: 'var(--error)' }} />
             <div className="stat-label flex-1">Rejetées (ce mois)</div>
@@ -46,10 +46,10 @@ export default function DirecteurOverview() {
 
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp size={28} className="opacity-80" />
+            <TrendingUp size={28} className="opacity-80" color="white" />
             <div className="stat-label flex-1 text-white opacity-90">Taux d'approbation</div>
           </div>
-          <div className="stat-value">{stats.approval_rate}%</div>
+          <div className="stat-value text-white">{stats.approval_rate}%</div>
         </div>
       </div>
 
