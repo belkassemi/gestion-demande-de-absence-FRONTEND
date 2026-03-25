@@ -6,7 +6,7 @@ import { useLoginMutation } from '../features/api/absenceApi';
 import { setCredentials } from '../features/auth/authSlice';
 
 import bgImage from '../assets/building-perspective.jpg';
-import logo from '/logo-fr.png';
+import logo from '/dark_mode_urbaine_logo.png';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -64,7 +64,8 @@ export default function Home() {
       <nav style={{
         position: 'relative', zIndex: 10,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '28px 56px'
+        padding: '28px 56px',
+        animation: 'fadeIn 1s ease-out forwards', opacity: 0
       }}>
         <img src={logo} alt="Logo" style={{ height: '68px', width: 'auto', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))' }} />
         <div style={{ display: 'flex', gap: '36px' }}>
@@ -97,7 +98,7 @@ export default function Home() {
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           textAlign: 'center', maxWidth: '860px',
-          transition: 'all 0.6s cubic-bezier(0.16,1,0.3,1)',
+          transition: 'all 0.2s ease-out',
           opacity: showForm ? 0 : 1,
           transform: showForm ? 'translateY(-32px) scale(0.97)' : 'translateY(0) scale(1)',
           pointerEvents: showForm ? 'none' : 'auto'
@@ -107,14 +108,16 @@ export default function Home() {
             fontWeight: '800', color: '#fff',
             lineHeight: 1.15, marginBottom: '24px',
             textShadow: '0 2px 24px rgba(0,0,0,0.4)',
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.02em',
+            animation: 'slideUp 0.8s ease-out forwards', opacity: 0
           }}>
             Système de Gestion<br />des Absences
           </h1>
           <p style={{
             color: 'rgba(255,255,255,0.82)', fontSize: '17px',
             lineHeight: 1.8, maxWidth: '680px', marginBottom: '44px',
-            fontWeight: '400'
+            fontWeight: '400',
+            animation: 'slideUp 0.8s ease-out 0.2s forwards', opacity: 0
           }}>
             Plateforme moderne et intuitive pour la gestion des demandes d'absences et autorisations de sortie.
             Simplifiez le processus de demande, suivez l'historique et gérez les approbations en temps réel.
@@ -137,7 +140,8 @@ export default function Home() {
               boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8)',
               transition: 'transform 0.2s, box-shadow 0.2s',
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              animation: 'slideUp 0.8s ease-out 0.4s forwards', opacity: 0
             }}
             onMouseEnter={e => {
               e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)';
@@ -164,16 +168,16 @@ export default function Home() {
           position: 'absolute',
           width: '100%', maxWidth: '440px',
           padding: '0 20px',
-          transition: 'all 0.6s cubic-bezier(0.16,1,0.3,1)',
+          transition: 'all 0.2s ease-out',
           opacity: showForm ? 1 : 0,
-          transform: showForm ? 'translateY(0)' : 'translateY(40px)',
+          transform: showForm ? 'translateY(0)' : 'translateY(20px)',
           pointerEvents: showForm ? 'auto' : 'none'
         }}>
           <div style={{
-            background: 'rgba(255,255,255,0.07)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255,255,255,0.15)',
+            background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255,255,255,0.2)',
             borderRadius: '24px',
             padding: '40px 36px',
             boxShadow: '0 32px 64px rgba(0,0,0,0.4), 0 2px 4px rgba(255,255,255,0.05) inset'

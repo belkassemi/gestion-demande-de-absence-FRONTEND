@@ -14,7 +14,7 @@ import {
     Landmark,
     ChevronRight
 } from 'lucide-react';
-import logoDark from '/logo-fr.png';
+import logoDark from '/dark_mode_urbaine_logo.png';
 import buildingImage from '../assets/building-perspective.jpg';
 
 export default function AboutPage() {
@@ -106,12 +106,11 @@ export default function AboutPage() {
                     <h1 style={{
                         fontSize: '3.5rem', fontWeight: '300', color: '#fff',
                         textAlign: 'center', letterSpacing: '-0.02em',
-                        opacity: isVisible ? 1 : 0, transform: isVisible ? 'none' : 'translateY(20px)',
-                        transition: 'all 1s ease'
+                        animation: 'slideUp 0.8s ease-out forwards', opacity: 0
                     }}>
                         À <span style={{ fontWeight: '700' }}>Propos</span>
                     </h1>
-                    <div style={{ width: '80px', height: '2px', backgroundColor: 'rgba(255,255,255,0.3)', marginTop: '24px' }}></div>
+                    <div style={{ width: '80px', height: '2px', backgroundColor: 'rgba(255,255,255,0.3)', marginTop: '24px', animation: 'fadeIn 1s ease-out 0.3s forwards', opacity: 0 }}></div>
                 </div>
             </div>
 
@@ -123,10 +122,11 @@ export default function AboutPage() {
                         gap: '1px', backgroundColor: '#e2e8f0',
                         borderRadius: '4px', overflow: 'hidden'
                     }}>
-                        {stats.map((stat) => (
+                        {stats.map((stat, idx) => (
                             <div key={stat.label} style={{
                                 backgroundColor: '#fff', padding: '32px 16px',
-                                textAlign: 'center'
+                                textAlign: 'center',
+                                animation: `slideUp 0.6s ease-out ${0.4 + idx * 0.15}s forwards`, opacity: 0
                             }}>
                                 <p style={{ fontSize: '2.5rem', fontWeight: '300', color: '#0f172a', marginBottom: '8px' }}>
                                     {stat.number}
@@ -148,7 +148,7 @@ export default function AboutPage() {
                         gap: '64px', alignItems: 'start'
                     }}>
                         {/* Left - Image */}
-                        <div style={{ position: 'relative' }}>
+                        <div style={{ position: 'relative', animation: 'slideUp 0.8s ease-out 0.8s forwards', opacity: 0 }}>
                             <img
                                 src={buildingImage}
                                 alt="AULSH Building"
@@ -158,7 +158,8 @@ export default function AboutPage() {
                                 position: 'absolute', bottom: '-24px', right: '-24px',
                                 backgroundColor: '#0f172a', color: '#fff',
                                 padding: '24px', borderRadius: '4px',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+                                animation: 'fadeIn 0.8s ease-out 1.2s forwards', opacity: 0
                             }}>
                                 <Award style={{ width: '32px', height: '32px', marginBottom: '8px' }} />
                                 <p style={{ fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>Excellence</p>
@@ -167,7 +168,7 @@ export default function AboutPage() {
                         </div>
 
                         {/* Right - Tabs */}
-                        <div style={{ paddingTop: '16px' }}>
+                        <div style={{ paddingTop: '16px', animation: 'slideUp 0.8s ease-out 1s forwards', opacity: 0 }}>
                             <h2 style={{ fontSize: '2rem', fontWeight: '300', color: '#0f172a', marginBottom: '32px' }}>
                                 Qui Sommes-<span style={{ fontWeight: '700' }}>Nous</span>?
                             </h2>
@@ -218,7 +219,7 @@ export default function AboutPage() {
             {/* Services Section */}
             <div style={{ padding: '64px 32px', backgroundColor: '#f8fafc' }}>
                 <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '48px', animation: 'slideUp 0.8s ease-out 1.2s forwards', opacity: 0 }}>
                         <h2 style={{ fontSize: '2rem', fontWeight: '300', color: '#0f172a', marginBottom: '16px' }}>
                             Nos <span style={{ fontWeight: '700' }}>Services</span>
                         </h2>
@@ -234,9 +235,10 @@ export default function AboutPage() {
                             { icon: MapPin, title: 'Urbanisme', desc: "Planification et gestion de l'espace urbain" },
                             { icon: Building2, title: 'Construction', desc: 'Promotion immobilière et suivi des chantiers' },
                             { icon: Landmark, title: 'Administration', desc: 'Gestion administrative et financière' }
-                        ].map((service) => (
+                        ].map((service, idx) => (
                             <div key={service.title} style={{
-                                backgroundColor: '#fff', padding: '40px 32px'
+                                backgroundColor: '#fff', padding: '40px 32px',
+                                animation: `slideUp 0.6s ease-out ${1.3 + idx * 0.15}s forwards`, opacity: 0
                             }}>
                                 <service.icon style={{ width: '36px', height: '36px', color: '#0f172a', marginBottom: '16px' }} />
                                 <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>
@@ -252,7 +254,7 @@ export default function AboutPage() {
             </div>
 
             {/* Contact Block */}
-            <div style={{ padding: '64px 32px', backgroundColor: '#fff' }}>
+            <div style={{ padding: '64px 32px', backgroundColor: '#fff', animation: 'slideUp 0.8s ease-out 1.5s forwards', opacity: 0 }}>
                 <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <div style={{ backgroundColor: '#0f172a', borderRadius: '4px', overflow: 'hidden' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>

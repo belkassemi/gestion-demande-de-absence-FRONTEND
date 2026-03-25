@@ -9,7 +9,7 @@ import {
     ArrowLeft,
     CheckCircle
 } from 'lucide-react';
-import logoDark from '/logo-fr.png';
+import logoDark from '/dark_mode_urbaine_logo.png';
 import buildingImage from '../assets/building-perspective.jpg';
 
 export default function ContactPage() {
@@ -77,11 +77,11 @@ export default function ContactPage() {
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                     height: '65%', padding: '0 16px', textAlign: 'center'
                 }}>
-                    <h1 style={{ fontSize: '3.5rem', fontWeight: '300', color: '#fff', letterSpacing: '-0.02em' }}>
+                    <h1 style={{ fontSize: '3.5rem', fontWeight: '300', color: '#fff', letterSpacing: '-0.02em', animation: 'slideUp 0.8s ease-out forwards', opacity: 0 }}>
                         Contactez-<span style={{ fontWeight: '700' }}>Nous</span>
                     </h1>
-                    <div style={{ width: '80px', height: '2px', backgroundColor: 'rgba(255,255,255,0.3)', marginTop: '24px', marginBottom: '16px' }}></div>
-                    <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '480px', lineHeight: '1.7' }}>
+                    <div style={{ width: '80px', height: '2px', backgroundColor: 'rgba(255,255,255,0.3)', marginTop: '24px', marginBottom: '16px', animation: 'fadeIn 1s ease-out 0.3s forwards', opacity: 0 }}></div>
+                    <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '480px', lineHeight: '1.7', animation: 'slideUp 0.8s ease-out 0.4s forwards', opacity: 0 }}>
                         Nous sommes à votre écoute pour toute question ou demande d'information
                     </p>
                 </div>
@@ -91,11 +91,12 @@ export default function ContactPage() {
             <div style={{ padding: '0 32px', marginTop: '-60px', position: 'relative', zIndex: 20 }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
-                        {contactInfo.map((info) => (
+                        {contactInfo.map((info, idx) => (
                             <div key={info.label} style={{
                                 backgroundColor: '#fff', borderRadius: '4px',
                                 boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
-                                padding: '24px 20px'
+                                padding: '24px 20px',
+                                animation: `slideUp 0.6s ease-out ${0.5 + (idx * 0.15)}s forwards`, opacity: 0
                             }}>
                                 <div style={{
                                     width: '48px', height: '48px', backgroundColor: info.color,
@@ -122,7 +123,7 @@ export default function ContactPage() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }}>
 
                         {/* Left - Form */}
-                        <div>
+                        <div style={{ animation: 'slideUp 0.8s ease-out 0.8s forwards', opacity: 0 }}>
                             <h2 style={{ fontSize: '2rem', fontWeight: '300', color: '#0f172a', marginBottom: '8px' }}>
                                 Envoyez-nous un <span style={{ fontWeight: '700' }}>message</span>
                             </h2>
@@ -195,7 +196,7 @@ export default function ContactPage() {
                         </div>
 
                         {/* Right - Map */}
-                        <div>
+                        <div style={{ animation: 'slideUp 0.8s ease-out 1s forwards', opacity: 0 }}>
                             <h2 style={{ fontSize: '2rem', fontWeight: '300', color: '#0f172a', marginBottom: '8px' }}>
                                 Notre <span style={{ fontWeight: '700' }}>Localisation</span>
                             </h2>
