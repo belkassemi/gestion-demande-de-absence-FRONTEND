@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearch } from '../../components/SearchContext';
 import {
   useGetUsersQuery,
   useCreateUserMutation,
@@ -50,9 +51,19 @@ export default function AdminUsers() {
   const [editingUser, setEditingUser] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [formError, setFormError] = useState('');
+  
+  const { searchQuery } = useSearch();
 
   // Users list may be paginated or a plain array depending on backend
-  const users = usersData?.data || usersData || [];
+  const allUsers = usersData?.data || usersData || [];
+  const users = allUsers.filter(u => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (u.name || '').toLowerCase().includes(q) || 
+           (u.email || '').toLowerCase().includes(q) || 
+           (u.role || '').toLowerCase().includes(q);
+  });
+  
   const lastPage = usersData?.last_page || 1;
 
   const depts = deptsData?.data || deptsData || [];

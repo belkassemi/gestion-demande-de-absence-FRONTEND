@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from './features/auth/authSlice';
+import { SearchProvider } from './components/SearchContext';
 
 // Pages
 import LoginPage          from './pages/LoginPage';
@@ -32,8 +33,9 @@ function PublicLanding() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/"         element={<PublicLanding />} />
+      <SearchProvider>
+        <Routes>
+          <Route path="/"         element={<PublicLanding />} />
         <Route path="/login"    element={<PublicLanding />} />
         <Route path="/old-login" element={<LoginPage />} />
         <Route path="/about"    element={<AboutPage />} />
@@ -64,7 +66,8 @@ export default function App() {
         } />
 
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+        </Routes>
+      </SearchProvider>
     </BrowserRouter>
   );
 }

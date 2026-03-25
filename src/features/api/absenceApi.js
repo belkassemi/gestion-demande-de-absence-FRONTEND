@@ -221,6 +221,20 @@ export const absenceApi = apiSlice.injectEndpoints({
       query: (params = {}) => ({ url: '/admin/audit-logs', params }),
       providesTags: ['AuditLog'],
     }),
+
+    // ── Notifications ─────────────────────────────────────────────────────────
+    getNotifications: builder.query({
+      query: () => '/notifications',
+      providesTags: ['Notification'],
+    }),
+    markNotificationRead: builder.mutation({
+      query: (id) => ({ url: `/notifications/${id}/read`, method: 'POST' }),
+      invalidatesTags: ['Notification'],
+    }),
+    markAllNotificationsRead: builder.mutation({
+      query: () => ({ url: '/notifications/read-all', method: 'POST' }),
+      invalidatesTags: ['Notification'],
+    }),
   }),
 });
 
@@ -283,4 +297,8 @@ export const {
   useGetAdminExportQuery,
   // Admin – Audit Logs
   useGetAuditLogsQuery,
+  // Notifications
+  useGetNotificationsQuery,
+  useMarkNotificationReadMutation,
+  useMarkAllNotificationsReadMutation,
 } = absenceApi;

@@ -5,6 +5,7 @@ import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { STORAGE_URL } from '../../features/api/apiSlice';
 import { FileText } from 'lucide-react';
 import { formatDate } from '../../lib/utils';
+import { useSearch } from '../../components/SearchContext';
 
 export default function EmployeeRequests() {
   const [page, setPage] = useState(1);
@@ -13,9 +14,20 @@ export default function EmployeeRequests() {
 
   const [selectedReq, setSelectedReq] = useState(null);
 
+  const { searchQuery } = useSearch();
+
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = data?.data || [];
+  const allRequests = data?.data || [];
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      (req.absence_type?.name || '').toLowerCase().includes(q) ||
+      (req.status || '').toLowerCase().includes(q) ||
+      (req.reason || '').toLowerCase().includes(q)
+    );
+  });
 
   const handleCancel = async (id) => {
     if (window.confirm("Voulez-vous vraiment annuler cette demande ?")) {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearch } from '../../components/SearchContext';
 import { useGetChefPendingRequestsQuery, useReviewChefRequestMutation } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
 import { STORAGE_URL } from '../../features/api/apiSlice';
@@ -14,9 +15,17 @@ export default function ChefPending() {
   const [selectedReq, setSelectedReq] = useState(null);
   const [comment, setComment] = useState('');
 
+  const { searchQuery } = useSearch();
+
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = Array.isArray(data) ? data : (data?.data || []); // Handle flat arrays correctly
+  const allRequests = Array.isArray(data) ? data : (data?.data || []);
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (req.user?.name || '').toLowerCase().includes(q) || 
+           (req.absence_type?.name || '').toLowerCase().includes(q);
+  });
 
   const handleReview = async (action) => {
     try {

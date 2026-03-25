@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearch } from '../../components/SearchContext';
 import { useGetTeamHistoryQuery } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
 import { formatDate, downloadFileSecure } from '../../lib/utils';
@@ -10,9 +11,18 @@ export default function ChefHistory() {
   
   const { data, isLoading, isFetching } = useGetTeamHistoryQuery({ page, status });
 
+  const { searchQuery } = useSearch();
+
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = data?.data || [];
+  const allRequests = data?.data || [];
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (req.user?.name || '').toLowerCase().includes(q) || 
+           (req.absence_type?.name || '').toLowerCase().includes(q) || 
+           (req.status || '').toLowerCase().includes(q);
+  });
 
   const handleExport = () => {
     let query = `?`;

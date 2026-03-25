@@ -5,6 +5,7 @@ import ApprovalTimeline from '../../components/ApprovalTimeline';
 import { FileText, Download } from 'lucide-react';
 import { STORAGE_URL } from '../../features/api/apiSlice';
 import { formatDate, downloadFileSecure } from '../../lib/utils';
+import { useSearch } from '../../components/SearchContext';
 
 export default function AdminAllRequests() {
   const [statusFilter, setStatusFilter] = useState('');
@@ -14,8 +15,20 @@ export default function AdminAllRequests() {
 
   const { data: reqData, isLoading } = useGetAdminAllRequestsQuery({ status: statusFilter, department_id: deptFilter, page });
   const { data: deptsData } = useGetDepartmentsQuery({});
+  
+  const { searchQuery } = useSearch();
 
-  const requests = reqData?.data || [];
+  const allRequests = reqData?.data || [];
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      (req.user?.name || '').toLowerCase().includes(q) ||
+      (req.absence_type?.name || '').toLowerCase().includes(q) ||
+      (req.status || '').toLowerCase().includes(q)
+    );
+  });
+  
   const lastPage = reqData?.last_page || 1;
   const depts = deptsData?.data || deptsData || [];
 
