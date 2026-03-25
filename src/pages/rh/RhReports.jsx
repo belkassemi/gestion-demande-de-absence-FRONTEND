@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetRhStatisticsQuery, useGetExportUrlQuery } from '../../features/api/absenceApi';
+import { useGetRhStatisticsQuery } from '../../features/api/absenceApi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Download, ClipboardList, CheckCircle, XCircle } from 'lucide-react';
 

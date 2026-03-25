@@ -1,0 +1,142 @@
+﻿
+> absence-frontend@0.0.0 lint
+> eslint .
+
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\components\ui\badge.jsx
+  47:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\components\ui\button.jsx
+  63:18  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\components\ui\form.jsx
+  127:3  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\pages\AboutPage.jsx
+  23:12  error  'isVisible' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     no-unused-vars
+  26:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  24 |
+  25 |     useEffect(() => {
+> 26 |         setIsVisible(true);
+     |         ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  27 |     }, []);
+  28 |
+  29 |     const tabs = [  react-hooks/set-state-in-effect
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\pages\admin\AdminCalendar.jsx
+  33:9   warning  The 'absences' conditional could make the dependencies of useMemo Hook (at line 44) change on every render. To fix this, wrap the initialization of 'absences' in its own useMemo() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/exhaustive-deps
+  37:22  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+  35 |   const departments = useMemo(() => {
+  36 |     const map = {};
+> 37 |     absences.forEach((r) => {
+     |                      ^^^^^^^^
+> 38 |       const dept = r.user?.department;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 39 |       if (dept?.id && !map[dept.id]) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 40 |         map[dept.id] = { id: dept.id, name: dept.name, color: getDeptColor(dept.id, deptColorMap.current) };
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 41 |       }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |     });
+     | ^^^^^^ Passing a ref to a function may read its value during render
+  43 |     return Object.values(map);
+  44 |   }, [absences]);
+  45 |  react-hooks/refs
+  50:31  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+  48 |     : absences.filter((r) => String(r.user?.department?.id) === String(filterDept));
+  49 |
+> 50 |   const events = filtered.map((req) => {
+     |                               ^^^^^^^^^^
+> 51 |     const endDate = new Date(req.end_date);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 52 |     endDate.setDate(endDate.getDate() + 1);
+     ظخ
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 76 |     };
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 77 |   });
+     | ^^^^ Passing a ref to a function may read its value during render
+  78 |
+  79 |   const handleDatesSet = (dateInfo) => {
+  80 |     const mid = new Date(                                                                      react-hooks/refs
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\pages\admin\AdminUsers.jsx
+  25:17  error  'data' is defined but never used  no-unused-vars
+  25:23  error  'ctx' is defined but never used   no-unused-vars
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\pages\directeur\DirecteurCalendar.jsx
+  34:9   warning  The 'absences' conditional could make the dependencies of useMemo Hook (at line 46) change on every render. To fix this, wrap the initialization of 'absences' in its own useMemo() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/exhaustive-deps
+  39:22  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+  37 |   const departments = useMemo(() => {
+  38 |     const map = {};
+> 39 |     absences.forEach((r) => {
+     |                      ^^^^^^^^
+> 40 |       const dept = r.user?.department;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 41 |       if (dept?.id && !map[dept.id]) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |         map[dept.id] = { id: dept.id, name: dept.name, color: getDeptColor(dept.id, deptColorMap.current) };
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 43 |       }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     });
+     | ^^^^^^ Passing a ref to a function may read its value during render
+  45 |     return Object.values(map);
+  46 |   }, [absences]);
+  47 |  react-hooks/refs
+  52:31  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+  50 |     : absences.filter((r) => String(r.user?.department?.id) === String(filterDept));
+  51 |
+> 52 |   const events = filtered.map((req) => {
+     |                               ^^^^^^^^^^
+> 53 |     const endDate = new Date(req.end_date);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 54 |     endDate.setDate(endDate.getDate() + 1);
+     ظخ
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 78 |     };
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 79 |   });
+     | ^^^^ Passing a ref to a function may read its value during render
+  80 |
+  81 |   const handleDatesSet = (dateInfo) => {
+  82 |     const mid = new Date(                                                                      react-hooks/refs
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\pages\employee\EmployeeRequestForm.jsx
+  54:25  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+  52 |   });
+  53 |
+> 54 |   const watchedTypeId = form.watch('absence_type_id');
+     |                         ^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  55 |   const watchedStart = form.watch('start_date');
+  56 |   const watchedEnd = form.watch('end_date');
+  57 |  react-hooks/incompatible-library
+
+C:\Users\J4M4L\Desktop\LEAVE MANAGEMENT SYSTEM\src\pages\rh\RhReports.jsx
+  2:35  error  'useGetExportUrlQuery' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+ظ£û 15 problems (12 errors, 3 warnings)
+

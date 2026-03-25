@@ -8,7 +8,6 @@ import {
   CheckSquare, BarChart2, Building2, Users, FolderOpen,
   LogOut, FileText, ShieldCheck, BookOpen, CalendarDays
 } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
 const NAV_BY_ROLE = {
@@ -61,7 +60,6 @@ export default function Sidebar() {
     navigate('/');
   };
 
-  const initials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || '?';
 
   return (
     <aside className="sidebar">

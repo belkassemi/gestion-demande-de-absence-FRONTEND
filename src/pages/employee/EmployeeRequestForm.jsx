@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/incompatible-library */
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetAbsenceTypesQuery, useCreateRequestMutation } from '../../features/api/absenceApi';

@@ -22,7 +22,7 @@ const userSchema = z.object({
   email: z.string().email("Adresse email invalide"),
   password: z.string().optional(),
   role: z.string().min(1, "Rôle obligatoire")
-}).superRefine((data, ctx) => {
+}).superRefine(() => {
   // We need context to know if we are creating or editing, so we'll do password check manually inside the submit handler 
   // or pass an indicator. Let's do it in handleSubmit.
 });
