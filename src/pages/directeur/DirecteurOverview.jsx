@@ -46,10 +46,10 @@ export default function DirecteurOverview() {
 
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp size={28} className="text-white opacity-80" />
+            <TrendingUp size={28} className="opacity-80" color="white" />
             <div className="stat-label flex-1 text-white opacity-90">Taux d'approbation</div>
           </div>
-          <div className="stat-value">{stats.approval_rate}%</div>
+          <div className="stat-value text-white">{stats.approval_rate}%</div>
         </div>
       </div>
 

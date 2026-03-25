@@ -81,6 +81,9 @@ body {
 }
 ::selection { background: rgba(81,146,117,0.15); color: var(--primary-dark); }
 
+/* ── Typography / Utilities ── */
+.text-muted { color: var(--text-secondary) !important; }
+
 /* ── Cards ── */
 .card {
   background: var(--surface);

@@ -40,8 +40,8 @@ export default function AdminUsers() {
   const [roleFilter, setRoleFilter] = useState('');
   const [page, setPage] = useState(1);
   const { data: usersData, isLoading } = useGetUsersQuery({ role: roleFilter, page });
-  const { data: depts } = useGetDepartmentsQuery({});
-  const { data: services } = useGetServicesQuery({});
+  const { data: deptsData, isLoading: isDeptsLoading } = useGetDepartmentsQuery();
+  const { data: servicesData, isLoading: isServicesLoading } = useGetServicesQuery();
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const [deleteUser] = useDeleteUserMutation();
@@ -54,6 +54,9 @@ export default function AdminUsers() {
   // Users list may be paginated or a plain array depending on backend
   const users = usersData?.data || usersData || [];
   const lastPage = usersData?.last_page || 1;
+
+  const depts = deptsData?.data || deptsData || [];
+  const services = servicesData?.data || servicesData || [];
 
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
@@ -220,14 +223,14 @@ export default function AdminUsers() {
                   <label className="form-label">Département</label>
                   <select className="form-input" value={form.department_id} onChange={e => setForm({ ...form, department_id: e.target.value })}>
                     <option value="">Aucun</option>
-                    {(depts?.data || depts || []).map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                    {isDeptsLoading ? <option disabled>Chargement...</option> : depts.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
                   </select>
                 </div>
                 <div className="form-group">
                   <label className="form-label">Service</label>
                   <select className="form-input" value={form.service_id} onChange={e => setForm({ ...form, service_id: e.target.value })}>
                     <option value="">Aucun</option>
-                    {(services?.data || services || []).filter(s => !form.department_id || s.department_id == form.department_id).map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                    {isServicesLoading ? <option disabled>Chargement...</option> : services.filter(s => !form.department_id || s.department_id == form.department_id).map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                   </select>
                 </div>
                 {form.role === 'employee' && (

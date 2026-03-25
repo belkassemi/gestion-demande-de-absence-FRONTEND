@@ -55,10 +55,10 @@ export default function DirecteurStats() {
         </div>
         <div className="stat-card primary">
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp size={28} className="text-white opacity-80" />
+            <TrendingUp size={28} className="opacity-80" color="white" />
             <div className="stat-label flex-1 text-white opacity-90">Taux d'approbation</div>
           </div>
-          <div className="stat-value">{approvalRate}%</div>
+          <div className="stat-value text-white">{approvalRate}%</div>
         </div>
         <div className="stat-card">
           <div className="flex items-center gap-3 mb-2">
@@ -90,7 +90,7 @@ export default function DirecteurStats() {
         ) : <p className="text-muted text-sm">Aucune donnée pour {year}.</p>}
       </div>
 
-      <div className="grid-2" style={{ gap: '1.5rem' }}>
+      <div className="grid-2" style={{ gap: '1.5rem', margin: '2rem 0' }}>
         {/* By Department */}
         <div className="card">
           <h3 className="font-semibold mb-4 text-sm">Par département</h3>
