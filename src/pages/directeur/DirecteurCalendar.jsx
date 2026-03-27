@@ -28,22 +28,27 @@ export default function DirecteurCalendar() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [filterDept, setFilterDept] = useState('all');
   const calendarRef = useRef(null);
-  const deptColorMap = useRef({});
 
   const monthStr = currentDate.toISOString().slice(0, 7);
   const { data, isLoading } = useGetDirecteurCalendarQuery({ month: monthStr });
   const absences = Array.isArray(data) ? data : (data?.data || []);
 
   // Build department list for legend & filter
-  const departments = useMemo(() => {
-    const map = {};
+  const { departments, colorMap } = useMemo(() => {
+    const deptMap = {};
+    const cMap = {};
+    let colorIdx = 0;
     absences.forEach((r) => {
       const dept = r.user?.department;
-      if (dept?.id && !map[dept.id]) {
-        map[dept.id] = { id: dept.id, name: dept.name, color: getDeptColor(dept.id, deptColorMap.current) };
+      if (dept?.id && !deptMap[dept.id]) {
+        if (!cMap[dept.id]) {
+          cMap[dept.id] = DEPT_PALETTE[colorIdx % DEPT_PALETTE.length];
+          colorIdx++;
+        }
+        deptMap[dept.id] = { id: dept.id, name: dept.name, color: cMap[dept.id] };
       }
     });
-    return Object.values(map);
+    return { departments: Object.values(deptMap), colorMap: cMap };
   }, [absences]);
 
   const filtered = filterDept === 'all'
@@ -54,7 +59,7 @@ export default function DirecteurCalendar() {
     const endDate = new Date(req.end_date);
     endDate.setDate(endDate.getDate() + 1);
     const deptId = req.user?.department?.id;
-    const deptColor = getDeptColor(deptId, deptColorMap.current);
+    const deptColor = deptId ? colorMap[deptId] : '#94a3b8';
     const isPending = req.status === 'pending';
 
     return {
@@ -62,7 +67,7 @@ export default function DirecteurCalendar() {
       title: req.user?.name,
       start: req.start_date,
       end: endDate.toISOString().split('T')[0],
-      backgroundColor: deptColor,
+      backgroundColor: deptColor || '#94a3b8',
       borderColor: isPending ? 'rgba(0,0,0,0.2)' : 'transparent',
       textColor: '#fff',
       extendedProps: {
@@ -74,7 +79,7 @@ export default function DirecteurCalendar() {
         end: req.end_date,
         reason: req.reason,
         status: req.status,
-        deptColor,
+        deptColor: deptColor || '#94a3b8',
       },
     };
   });

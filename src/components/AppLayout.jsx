@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
-import { Search, Bell } from 'lucide-react';
+import { Search, Bell, Menu, X } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
-import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
-import { useSearch } from './SearchContext';
-import { useGetNotificationsQuery, useMarkNotificationReadMutation, useMarkAllNotificationsReadMutation } from '@/features/api/absenceApi';
+// import { useSearch } from './SearchContext'; 
+// import { useGetNotificationsQuery, useMarkNotificationReadMutation, useMarkAllNotificationsReadMutation } from '@/features/api/absenceApi';
 
 export default function AppLayout({ title, children, actions }) {
   const user = useSelector((state) => state.auth?.user);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const initials = user?.name
     ?.split(' ')
@@ -119,6 +126,7 @@ export default function AppLayout({ title, children, actions }) {
                 }}
               />
             </div>
+            )}
 
             {/* Bell */}
             <button
