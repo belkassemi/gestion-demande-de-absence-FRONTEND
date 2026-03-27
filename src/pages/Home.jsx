@@ -60,14 +60,14 @@ export default function Home() {
       <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.58)', zIndex: 0 }} />
 
       {/* Navbar */}
-      <nav style={{
+      <nav className="home-nav" style={{
         position: 'relative', zIndex: 10,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '28px 56px',
         animation: 'fadeIn 1s ease-out forwards', opacity: 0
       }}>
-        <img src={logo} alt="Logo" style={{ height: '68px', width: 'auto', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))' }} />
-        <div style={{ display: 'flex', gap: '36px' }}>
+        <img className="home-logo" src={logo} alt="Logo" style={{ height: '68px', width: 'auto', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))' }} />
+        <div className="home-nav-links" style={{ display: 'flex', gap: '36px' }}>
           {['Accueil', 'A propos', 'Contactez-nous'].map((label, i) => (
             <button
               key={label}
@@ -94,7 +94,7 @@ export default function Home() {
       }}>
 
         {/* Hero Text */}
-        <div style={{
+        <div className="home-hero-text" style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           textAlign: 'center', maxWidth: '860px',
           transition: 'all 0.2s ease-out',
@@ -102,7 +102,7 @@ export default function Home() {
           transform: showForm ? 'translateY(-32px) scale(0.97)' : 'translateY(0) scale(1)',
           pointerEvents: showForm ? 'none' : 'auto'
         }}>
-          <h1 style={{
+          <h1 className="home-hero-title" style={{
             fontSize: 'clamp(2.4rem, 5vw, 4.2rem)',
             fontWeight: '800', color: '#fff',
             lineHeight: 1.15, marginBottom: '24px',
@@ -112,7 +112,7 @@ export default function Home() {
           }}>
             Système de Gestion<br />des Absences
           </h1>
-          <p style={{
+          <p className="home-hero-desc" style={{
             color: 'rgba(255,255,255,0.82)', fontSize: '17px',
             lineHeight: 1.8, maxWidth: '680px', marginBottom: '44px',
             fontWeight: '400',
@@ -172,7 +172,7 @@ export default function Home() {
           transform: showForm ? 'translateY(0)' : 'translateY(20px)',
           pointerEvents: showForm ? 'auto' : 'none'
         }}>
-          <div style={{
+          <div className="home-login-card" style={{
             background: 'rgba(255,255,255,0.1)',
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)',
