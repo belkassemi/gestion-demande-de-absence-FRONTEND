@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useGetDirecteurStatisticsQuery } from '../../features/api/absenceApi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import { Layers, ClipboardList, TrendingUp } from 'lucide-react';
+import { Layers, ClipboardList, TrendingUp, Download } from 'lucide-react';
+import { downloadFileSecure } from '../../lib/utils';
 
 export default function DirecteurStats() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -26,6 +27,11 @@ export default function DirecteurStats() {
   const totalApproved = (stats.by_department || []).reduce((acc, d) => acc + (d.approved || 0), 0);
   const approvalRate = totalAll > 0 ? Math.round((totalApproved / totalAll) * 100) : 0;
 
+  const handleExport = () => {
+    const url = `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/directeur/reports/export?from=${year}-01-01&to=${year}-12-31`;
+    downloadFileSecure(url, `rapport_directeur_${year}.csv`);
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -41,6 +47,9 @@ export default function DirecteurStats() {
             max={2030}
             onChange={e => setYear(Number(e.target.value))}
           />
+          <button className="btn btn-secondary flex items-center gap-2 text-sm" onClick={handleExport}>
+            <Download size={16} /> Exporter CSV
+          </button>
         </div>
       </div>
 

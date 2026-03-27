@@ -1,28 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Sidebar from './Sidebar';
-import { Search, Bell, Menu, X } from 'lucide-react';
+import { Search, Bell } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
+import { useSearch } from './SearchContext';
+import { useGetNotificationsQuery, useMarkNotificationReadMutation, useMarkAllNotificationsReadMutation } from '@/features/api/absenceApi';
 
 export default function AppLayout({ title, children, actions }) {
   const user = useSelector((state) => state.auth?.user);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      if (!mobile) setSidebarOpen(false);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Close sidebar on route change (mobile)
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, []);
 
   const initials = user?.name
     ?.split(' ')
@@ -115,32 +101,42 @@ export default function AppLayout({ title, children, actions }) {
                 background: 'var(--surface-alt)',
                 border: '1px solid var(--border)',
                 borderRadius: '9999px',
-                padding: '0.4rem 0.9rem', gap: '0.5rem',
-              }}>
-                <Search size={15} style={{ color: 'var(--text-light)' }} />
-                <input
-                  type="text"
-                  placeholder="Rechercher..."
-                  style={{
-                    background: 'transparent', border: 'none', outline: 'none',
-                    fontSize: '14px', color: 'var(--text-primary)', width: '160px',
-                  }}
-                />
-              </div>
-            )}
+                padding: '0.4rem 0.9rem',
+                gap: '0.5rem',
+              }}
+            >
+              <Search size={15} style={{ color: 'var(--text-light)' }} />
+              <input
+                type="text"
+                placeholder="Rechercher..."
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  outline: 'none',
+                  fontSize: '14px',
+                  color: 'var(--text-primary)',
+                  width: '160px',
+                }}
+              />
+            </div>
 
             {/* Bell */}
-            <button style={{
-              position: 'relative', color: 'var(--text-secondary)',
-              background: 'none', border: 'none', cursor: 'pointer', padding: '6px',
-            }}>
+            <button
+              style={{ position: 'relative', color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: '6px' }}
+            >
               <Bell size={20} />
-              <span style={{
-                position: 'absolute', top: 2, right: 2,
-                width: '8px', height: '8px',
-                background: 'var(--error)', borderRadius: '50%',
-                border: '2px solid white',
-              }} />
+              <span
+                style={{
+                  position: 'absolute',
+                  top: 2,
+                  right: 2,
+                  width: '8px',
+                  height: '8px',
+                  background: 'var(--error)',
+                  borderRadius: '50%',
+                  border: '2px solid white',
+                }}
+              />
             </button>
 
             {/* Divider */}

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useSearch } from '../../components/SearchContext';
 import { useGetTeamHistoryQuery } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
-import { formatDate } from '../../lib/utils';
+import { formatDate, downloadFileSecure } from '../../lib/utils';
+import { Download } from 'lucide-react';
 
 export default function ChefHistory() {
   const [page, setPage] = useState(1);
@@ -9,27 +11,48 @@ export default function ChefHistory() {
   
   const { data, isLoading, isFetching } = useGetTeamHistoryQuery({ page, status });
 
+  const { searchQuery } = useSearch();
+
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = data?.data || [];
+  const allRequests = data?.data || [];
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (req.user?.name || '').toLowerCase().includes(q) || 
+           (req.absence_type?.name || '').toLowerCase().includes(q) || 
+           (req.status || '').toLowerCase().includes(q);
+  });
+
+  const handleExport = () => {
+    let query = `?`;
+    if (status) query += `status=${status}`;
+    const url = `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/chef-service/reports/export${query}`;
+    downloadFileSecure(url, `rapport_equipe_${new Date().toISOString().slice(0, 10)}.csv`);
+  };
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="font-bold">Historique des demandes (Équipe)</h2>
-        <select 
-          className="form-input" 
-          style={{ width: 'auto' }} 
-          value={status} 
-          onChange={e => { setStatus(e.target.value); setPage(1); }}
-          disabled={isFetching}
-        >
-          <option value="">Tous les statuts</option>
-          <option value="pending">En attente</option>
-          <option value="approved">Approuvées</option>
-          <option value="rejected">Rejetées</option>
-          <option value="cancelled">Annulées</option>
-        </select>
+        <div className="flex gap-3">
+          <select 
+            className="form-input" 
+            style={{ width: 'auto' }} 
+            value={status} 
+            onChange={e => { setStatus(e.target.value); setPage(1); }}
+            disabled={isFetching}
+          >
+            <option value="">Tous les statuts</option>
+            <option value="pending">En attente</option>
+            <option value="approved">Approuvées</option>
+            <option value="rejected">Rejetées</option>
+            <option value="cancelled">Annulées</option>
+          </select>
+          <button className="btn btn-secondary flex items-center gap-2 text-sm" onClick={handleExport}>
+            <Download size={16} /> Exporter CSV
+          </button>
+        </div>
       </div>
 
       <div className="card text-sm" style={{ padding: 0, overflow: 'hidden' }}>

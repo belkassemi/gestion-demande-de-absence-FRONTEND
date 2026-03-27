@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearch } from '../../components/SearchContext';
 import { useGetDirecteurPendingRequestsQuery, useReviewDirecteurRequestMutation } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
@@ -12,9 +13,17 @@ export default function DirecteurPending() {
   const [selectedReq, setSelectedReq] = useState(null);
   const [comment, setComment] = useState('');
 
+  const { searchQuery } = useSearch();
+
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
-  const requests = data || [];
+  const allRequests = data || [];
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (req.user?.name || '').toLowerCase().includes(q) || 
+           (req.absence_type?.name || '').toLowerCase().includes(q);
+  });
 
   const handleReview = async (action) => {
     try {

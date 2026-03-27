@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useGetAdminAllRequestsQuery, useGetDepartmentsQuery } from '../../features/api/absenceApi';
 import StatusBadge from '../../components/StatusBadge';
 import ApprovalTimeline from '../../components/ApprovalTimeline';
-import { FileText } from 'lucide-react';
+import { FileText, Download } from 'lucide-react';
 import { STORAGE_URL } from '../../features/api/apiSlice';
-import { formatDate } from '../../lib/utils';
+import { formatDate, downloadFileSecure } from '../../lib/utils';
+import { useSearch } from '../../components/SearchContext';
 
 export default function AdminAllRequests() {
   const [statusFilter, setStatusFilter] = useState('');
@@ -14,10 +15,30 @@ export default function AdminAllRequests() {
 
   const { data: reqData, isLoading } = useGetAdminAllRequestsQuery({ status: statusFilter, department_id: deptFilter, page });
   const { data: deptsData } = useGetDepartmentsQuery({});
+  
+  const { searchQuery } = useSearch();
 
-  const requests = reqData?.data || [];
+  const allRequests = reqData?.data || [];
+  const requests = allRequests.filter(req => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      (req.user?.name || '').toLowerCase().includes(q) ||
+      (req.absence_type?.name || '').toLowerCase().includes(q) ||
+      (req.status || '').toLowerCase().includes(q)
+    );
+  });
+  
   const lastPage = reqData?.last_page || 1;
   const depts = deptsData?.data || deptsData || [];
+
+  const handleExport = () => {
+    let query = `?`;
+    if (statusFilter) query += `status=${statusFilter}&`;
+    if (deptFilter) query += `department_id=${deptFilter}`;
+    const url = `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/admin/reports/export${query}`;
+    downloadFileSecure(url, `rapport_admin_${new Date().toISOString().slice(0, 10)}.csv`);
+  };
 
   if (isLoading) return <div className="loader"><div className="spinner"></div></div>;
 
@@ -37,6 +58,9 @@ export default function AdminAllRequests() {
             <option value="">Tous les départements</option>
             {depts.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
           </select>
+          <button className="btn btn-secondary flex items-center gap-2 text-sm" onClick={handleExport}>
+            <Download size={16} /> Exporter CSV
+          </button>
         </div>
       </div>
 
