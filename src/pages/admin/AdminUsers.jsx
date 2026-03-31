@@ -125,8 +125,14 @@ export default function AdminUsers() {
     }
 
     const payload = { ...form };
-    if (!payload.department_id) delete payload.department_id;
-    if (!payload.service_id) delete payload.service_id;
+    if (form.role === 'directeur') {
+      delete payload.department_id;
+      delete payload.service_id;
+    } else {
+      if (!payload.department_id) delete payload.department_id;
+      if (!payload.service_id) delete payload.service_id;
+    }
+    
     if (!payload.chef_service_id) delete payload.chef_service_id;
     if (!payload.password) delete payload.password;
     try {
@@ -227,23 +233,27 @@ export default function AdminUsers() {
                 <div className="form-group">
                   <label className="form-label">Rôle <span className="text-error">*</span></label>
                   <select className="form-input" required value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}>
-                    {ROLES.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
+                    {ROLES.filter(r => r.value !== 'admin' || (editingUser && editingUser.role === 'admin')).map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Département</label>
-                  <select className="form-input" value={form.department_id} onChange={e => setForm({ ...form, department_id: e.target.value })}>
-                    <option value="">Aucun</option>
-                    {isDeptsLoading ? <option disabled>Chargement...</option> : depts.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Service</label>
-                  <select className="form-input" value={form.service_id} onChange={e => setForm({ ...form, service_id: e.target.value })}>
-                    <option value="">Aucun</option>
-                    {isServicesLoading ? <option disabled>Chargement...</option> : services.filter(s => !form.department_id || s.department_id == form.department_id).map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-                  </select>
-                </div>
+                {form.role !== 'directeur' && (
+                  <>
+                    <div className="form-group">
+                      <label className="form-label">Département</label>
+                      <select className="form-input" value={form.department_id} onChange={e => setForm({ ...form, department_id: e.target.value })}>
+                        <option value="">Aucun</option>
+                        {isDeptsLoading ? <option disabled>Chargement...</option> : depts.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Service</label>
+                      <select className="form-input" value={form.service_id} onChange={e => setForm({ ...form, service_id: e.target.value })}>
+                        <option value="">Aucun</option>
+                        {isServicesLoading ? <option disabled>Chargement...</option> : services.filter(s => !form.department_id || s.department_id == form.department_id).map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                      </select>
+                    </div>
+                  </>
+                )}
                 {form.role === 'employee' && (
                   <div className="form-group" style={{ gridColumn: 'span 2' }}>
                     <label className="form-label">Chef de Service</label>
